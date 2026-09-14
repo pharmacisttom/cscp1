@@ -8,10 +8,16 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+.next
 dist
 dist-ssr
-*.local
-.env
+
+# Environment files
+.env*
+!.env.example
+
+# Reference folders
+tomvis_ref/
 
 # Editor directories and files
 .vscode/*

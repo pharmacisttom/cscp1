@@ -1,0 +1,297 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "ตำบลปลวกแดง",
+        "name_en": "Pluak Daeng",
+        "subdistrictName": "ปลวกแดง",
+        "code": "210601",
+        "centerLat": 12.9754,
+        "centerLng": 101.2154,
+        "color": "#0d9488",
+        "type": "SUBDISTRICT",
+        "district": "ปลวกแดง",
+        "province": "ระยอง"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.185,
+              12.995
+            ],
+            [
+              101.235,
+              13.005
+            ],
+            [
+              101.255,
+              12.985
+            ],
+            [
+              101.245,
+              12.945
+            ],
+            [
+              101.21,
+              12.94
+            ],
+            [
+              101.18,
+              12.96
+            ],
+            [
+              101.185,
+              12.995
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "ตำบลมาบยางพร",
+        "name_en": "Map Yang Phon",
+        "subdistrictName": "มาบยางพร",
+        "code": "210605",
+        "centerLat": 12.9654,
+        "centerLng": 101.1404,
+        "color": "#0284c7",
+        "type": "SUBDISTRICT",
+        "district": "ปลวกแดง",
+        "province": "ระยอง"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.095,
+              13.01
+            ],
+            [
+              101.185,
+              12.995
+            ],
+            [
+              101.18,
+              12.96
+            ],
+            [
+              101.17,
+              12.925
+            ],
+            [
+              101.1,
+              12.92
+            ],
+            [
+              101.085,
+              12.97
+            ],
+            [
+              101.095,
+              13.01
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "ตำบลตาสิทธิ์",
+        "name_en": "Ta Sit",
+        "subdistrictName": "ตาสิทธิ์",
+        "code": "210602",
+        "centerLat": 13.0454,
+        "centerLng": 101.2284,
+        "color": "#8b5cf6",
+        "type": "SUBDISTRICT",
+        "district": "ปลวกแดง",
+        "province": "ระยอง"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.135,
+              13.085
+            ],
+            [
+              101.245,
+              13.1
+            ],
+            [
+              101.275,
+              13.05
+            ],
+            [
+              101.235,
+              13.005
+            ],
+            [
+              101.185,
+              12.995
+            ],
+            [
+              101.095,
+              13.01
+            ],
+            [
+              101.135,
+              13.085
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "ตำบลละหาร",
+        "name_en": "Lahan",
+        "subdistrictName": "ละหาร",
+        "code": "210603",
+        "centerLat": 12.9804,
+        "centerLng": 101.2954,
+        "color": "#f59e0b",
+        "type": "SUBDISTRICT",
+        "district": "ปลวกแดง",
+        "province": "ระยอง"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.255,
+              12.985
+            ],
+            [
+              101.32,
+              13.01
+            ],
+            [
+              101.345,
+              12.96
+            ],
+            [
+              101.31,
+              12.93
+            ],
+            [
+              101.245,
+              12.945
+            ],
+            [
+              101.255,
+              12.985
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "ตำบลแม่น้ำคู้",
+        "name_en": "Mae Nam Khu",
+        "subdistrictName": "แม่น้ำคู้",
+        "code": "210604",
+        "centerLat": 12.9154,
+        "centerLng": 101.2204,
+        "color": "#10b981",
+        "type": "SUBDISTRICT",
+        "district": "ปลวกแดง",
+        "province": "ระยอง"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.17,
+              12.925
+            ],
+            [
+              101.21,
+              12.94
+            ],
+            [
+              101.245,
+              12.945
+            ],
+            [
+              101.27,
+              12.885
+            ],
+            [
+              101.22,
+              12.875
+            ],
+            [
+              101.165,
+              12.89
+            ],
+            [
+              101.17,
+              12.925
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "ตำบลหนองไร่",
+        "name_en": "Nong Rai",
+        "subdistrictName": "หนองไร่",
+        "code": "210606",
+        "centerLat": 13.0104,
+        "centerLng": 101.3204,
+        "color": "#ec4899",
+        "type": "SUBDISTRICT",
+        "district": "ปลวกแดง",
+        "province": "ระยอง"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              101.275,
+              13.05
+            ],
+            [
+              101.35,
+              13.06
+            ],
+            [
+              101.365,
+              13
+            ],
+            [
+              101.32,
+              13.01
+            ],
+            [
+              101.255,
+              12.985
+            ],
+            [
+              101.275,
+              13.05
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

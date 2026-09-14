@@ -1,0 +1,731 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ==========================================
+// 1. TOMVIS CORE & TENANCY
+// ==========================================
+
+model Organization {
+  id             String          @id @default(uuid()) @db.Char(36)
+  slug           String          @unique @db.VarChar(80)
+  name           String          @db.VarChar(160)
+  province       String          @default("ระยอง") @db.VarChar(100)
+  district       String          @default("ปลวกแดง") @db.VarChar(100)
+  active         Boolean         @default(true)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  users          User[]
+  roles          Role[]
+  settings       SystemSetting[]
+  businesses     Business[]
+  officers       Officer[]
+  inspectionPlans InspectionPlan[]
+  importJobs     ImportJob[]
+  spatialClusters SpatialCluster[]
+
+  @@index([slug])
+}
+
+model User {
+  id                String               @id @default(uuid()) @db.Char(36)
+  organizationId    String               @db.Char(36)
+  organization      Organization         @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  email             String               @db.VarChar(254)
+  passwordHash      String               @db.VarChar(255)
+  firstName         String               @default("") @db.VarChar(80)
+  lastName          String               @default("") @db.VarChar(80)
+  displayName       String               @db.VarChar(160)
+  status            String               @default("ACTIVE") @db.VarChar(20) // ACTIVE, INACTIVE, SUSPENDED
+  emailVerifiedAt   DateTime?
+  lastLoginAt       DateTime?
+  passwordChangedAt DateTime             @default(now())
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  roles             UserRole[]
+  sessions          Session[]
+  twoFactor         TwoFactorCredential?
+  recoveryCodes     RecoveryCode[]
+  resets            PasswordReset[]
+  officer           Officer?
+  inspectionsCreated Inspection[]        @relation("CreatedInspections")
+  auditLogs         AuditLog[]
+
+  @@unique([organizationId, email])
+  @@unique([organizationId, id])
+  @@index([organizationId, createdAt])
+}
+
+model Role {
+  id             String           @id @default(uuid()) @db.Char(36)
+  organizationId String           @db.Char(36)
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  name           String           @db.VarChar(80) // SUPER_ADMIN, ADMIN, DISTRICT_MANAGER, INSPECTOR, ANALYST, VIEWER
+  description    String?          @db.VarChar(255)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  users          UserRole[]
+  permissions    RolePermission[]
+
+  @@unique([organizationId, name])
+  @@unique([organizationId, id])
+}
+
+model Permission {
+  id    String           @id @default(uuid()) @db.Char(36)
+  name  String           @unique @db.VarChar(100)
+  roles RolePermission[]
+}
+
+model UserRole {
+  organizationId String @db.Char(36)
+  userId         String @db.Char(36)
+  roleId         String @db.Char(36)
+  user           User   @relation(fields: [organizationId, userId], references: [organizationId, id], onDelete: Cascade)
+  role           Role   @relation(fields: [organizationId, roleId], references: [organizationId, id], onDelete: Restrict)
+
+  @@id([userId, roleId])
+  @@index([organizationId, roleId])
+}
+
+model RolePermission {
+  roleId       String     @db.Char(36)
+  permissionId String     @db.Char(36)
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Restrict)
+
+  @@id([roleId, permissionId])
+  @@index([permissionId])
+}
+
+model Session {
+  id               String   @id @default(uuid()) @db.Char(36)
+  tokenHash        String   @unique @db.Char(64)
+  userId           String   @db.Char(36)
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pendingTwoFactor Boolean  @default(false)
+  expiresAt        DateTime
+  idleExpiresAt    DateTime
+  createdAt        DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model TwoFactorCredential {
+  userId          String   @id @db.Char(36)
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  encryptedSecret String   @db.Text
+  enabled         Boolean  @default(false)
+  lastStep        Int      @default(-1)
+  setupExpiresAt  DateTime
+  updatedAt       DateTime @updatedAt
+}
+
+model RecoveryCode {
+  id       String    @id @default(uuid()) @db.Char(36)
+  userId   String    @db.Char(36)
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  codeHash String    @unique @db.Char(64)
+  usedAt   DateTime?
+
+  @@index([userId])
+}
+
+model PasswordReset {
+  id        String    @id @default(uuid()) @db.Char(36)
+  userId    String    @db.Char(36)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique @db.Char(64)
+  expiresAt DateTime
+  usedAt    DateTime?
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Officer {
+  id             String          @id @default(uuid()) @db.Char(36)
+  organizationId String          @db.Char(36)
+  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  userId         String?         @unique @db.Char(36)
+  user           User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  fullName       String          @db.VarChar(255)
+  position       String?         @db.VarChar(255)
+  workplace      String?         @db.VarChar(255)
+  district       String?         @db.VarChar(100)
+  phone          String?         @db.VarChar(50)
+  active         Boolean         @default(true)
+  startDate      DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  inspections    Inspection[]
+  plansAssigned  InspectionPlan[]
+
+  @@index([organizationId, district])
+}
+
+// ==========================================
+// 2. BUSINESS & ESTABLISHMENT REGISTRY
+// ==========================================
+
+model BusinessType {
+  id          String     @id @default(uuid()) @db.Char(36)
+  name        String     @unique @db.VarChar(160) // คลินิก / สถานพยาบาล, ร้านขายยา, สถานที่ผลิตอาหาร, สถานที่ผลิตน้ำดื่ม, ร้านชำ / ร้านค้าชุมชน
+  code        String     @unique @db.VarChar(50)
+  category    String     @default("HEALTH_PRODUCT") @db.VarChar(50)
+  baseRisk    Float      @default(20.0) // Intrinsic base risk (0 - 100)
+  inspectionIntervalDays Int @default(365) // Default re-inspection frequency
+  icon        String?    @db.VarChar(80)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  businesses  Business[]
+  templates   InspectionTemplate[]
+}
+
+model Business {
+  id                  String             @id @default(uuid()) @db.Char(36)
+  organizationId      String             @db.Char(36)
+  organization        Organization       @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  businessTypeId      String             @db.Char(36)
+  businessType        BusinessType       @relation(fields: [businessTypeId], references: [id], onDelete: Restrict)
+  name                String             @db.VarChar(255)
+  status              String             @default("ACTIVE") @db.VarChar(50) // ACTIVE, INACTIVE, SUSPENDED, CLOSED
+  inspectionStatus    String             @default("PENDING") @db.VarChar(50) // PENDING, SCHEDULED, INSPECTED, OVERDUE, FOLLOWUP_REQUIRED
+  riskLevel           String             @default("LOW") @db.VarChar(50) // LOW, MODERATE, HIGH, CRITICAL, UNKNOWN
+  riskScore           Float              @default(15.0) // 0 - 100
+  lastRiskCalculatedAt DateTime?
+  lastInspectionDate  DateTime?
+  nextInspectionDate  DateTime?
+  phone               String?            @db.VarChar(50)
+  openingHours        String?            @db.VarChar(255)
+  wasteManagement     String?            @db.Text
+  medicalEquipment    String?            @db.Text
+  notes               String?            @db.Text
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  location            BusinessLocation?
+  licenses            BusinessLicense[]
+  images              BusinessImage[]
+  documents           BusinessDocument[]
+  inspections         Inspection[]
+  complaints          Complaint[]
+  products            Product[]
+  planStops           InspectionPlanStop[]
+  riskSnapshots       RiskSnapshot[]
+  dataQualityIssues   DataQualityIssue[]
+
+  @@index([businessTypeId])
+  @@index([organizationId, status])
+  @@index([riskLevel, riskScore])
+  @@index([inspectionStatus])
+  @@index([lastInspectionDate])
+  @@index([nextInspectionDate])
+}
+
+model BusinessLocation {
+  id                 String    @id @default(uuid()) @db.Char(36)
+  businessId         String    @unique @db.Char(36)
+  business           Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  address            String?   @db.Text
+  moo                String?   @db.VarChar(50)
+  subdistrict        String    @db.VarChar(100)
+  district           String    @db.VarChar(100)
+  province           String    @default("ระยอง") @db.VarChar(100)
+  postalCode         String?   @db.VarChar(20)
+  latitude           Decimal?  @db.Decimal(10, 8)
+  longitude          Decimal?  @db.Decimal(11, 8)
+  coordinateSource   String    @default("IMPORT") @db.VarChar(50) // IMPORT, MANUAL, GPS, GEOCODING, VERIFIED_GPS
+  coordinateAccuracy Float?
+  verified           Boolean   @default(false)
+  verifiedAt         DateTime?
+  verifiedBy         String?   @db.VarChar(36)
+  geocodeStatus      String?   @default("PENDING") @db.VarChar(50) // SUCCESS, FAILED, PENDING
+  h3Index            String?   @db.VarChar(20) // Hexagonal spatial index
+  gridCode           String?   @db.VarChar(20) // Lat/Lng 1km grid code
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([province, district, subdistrict])
+  @@index([subdistrict])
+  @@index([latitude, longitude])
+  @@index([h3Index])
+  @@index([gridCode])
+  @@index([verified])
+}
+
+model BusinessLicense {
+  id                      String    @id @default(uuid()) @db.Char(36)
+  businessId              String    @db.Char(36)
+  business                Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  licenseNo               String    @db.VarChar(100)
+  oldLicenseNo            String?   @db.VarChar(100)
+  licenseeName            String?   @db.VarChar(255)
+  operatorName            String?   @db.VarChar(255)
+  professionalLicenseNo   String?   @db.VarChar(100)
+  issueDate               DateTime?
+  expireDate              DateTime?
+  expireYearText          String?   @db.VarChar(50) // Original B.E. string like 2567
+  status                  String    @default("ACTIVE") @db.VarChar(50) // ACTIVE, EXPIRED, SUSPENDED, REVOKED
+  isNearExpiry            Boolean   @default(false)
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  @@index([licenseNo])
+  @@index([status])
+  @@index([expireDate])
+  @@index([isNearExpiry])
+}
+
+model BusinessImage {
+  id          String   @id @default(uuid()) @db.Char(36)
+  businessId  String   @db.Char(36)
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  imageUrl    String   @db.Text
+  category    String   @default("FRONT") @db.VarChar(50) // FRONT, INSIDE_1, INSIDE_2, SPECIFIC, DOCUMENT
+  caption     String?  @db.VarChar(255)
+  uploadedAt  DateTime @default(now())
+
+  @@index([businessId, category])
+}
+
+model BusinessDocument {
+  id          String   @id @default(uuid()) @db.Char(36)
+  businessId  String   @db.Char(36)
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  documentUrl String   @db.Text
+  title       String   @db.VarChar(255)
+  fileType    String?  @db.VarChar(50)
+  fileSize    Int?
+  createdAt   DateTime @default(now())
+
+  @@index([businessId])
+}
+
+// ==========================================
+// 3. INSPECTIONS & DYNAMIC TEMPLATES
+// ==========================================
+
+model InspectionTemplate {
+  id             String                    @id @default(uuid()) @db.Char(36)
+  businessTypeId String                    @db.Char(36)
+  businessType   BusinessType              @relation(fields: [businessTypeId], references: [id], onDelete: Restrict)
+  title          String                    @db.VarChar(255)
+  description    String?                   @db.Text
+  isActive       Boolean                   @default(true)
+  createdAt      DateTime                  @default(now())
+  updatedAt      DateTime                  @updatedAt
+  versions       InspectionTemplateVersion[]
+
+  @@index([businessTypeId, isActive])
+}
+
+model InspectionTemplateVersion {
+  id          String             @id @default(uuid()) @db.Char(36)
+  templateId  String             @db.Char(36)
+  template    InspectionTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  version     Int                @default(1)
+  status      String             @default("ACTIVE") @db.VarChar(20) // DRAFT, ACTIVE, ARCHIVED
+  createdAt   DateTime           @default(now())
+  sections    InspectionSection[]
+  inspections Inspection[]
+
+  @@unique([templateId, version])
+}
+
+model InspectionSection {
+  id          String                    @id @default(uuid()) @db.Char(36)
+  versionId   String                    @db.Char(36)
+  version     InspectionTemplateVersion @relation(fields: [versionId], references: [id], onDelete: Cascade)
+  title       String                    @db.VarChar(255)
+  sortOrder   Int                       @default(0)
+  questions   InspectionQuestion[]
+
+  @@index([versionId, sortOrder])
+}
+
+model InspectionQuestion {
+  id          String            @id @default(uuid()) @db.Char(36)
+  sectionId   String            @db.Char(36)
+  section     InspectionSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  questionText String           @db.Text
+  questionType String           @default("BOOLEAN") @db.VarChar(50) // BOOLEAN, CHOICE, NUMBER, TEXT, PHOTO
+  weight      Float             @default(1.0)
+  isCritical  Boolean           @default(false)
+  sortOrder   Int               @default(0)
+  answers     InspectionAnswer[]
+
+  @@index([sectionId, sortOrder])
+}
+
+model Inspection {
+  id                 String                     @id @default(uuid()) @db.Char(36)
+  businessId         String                     @db.Char(36)
+  business           Business                   @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  templateVersionId  String?                    @db.Char(36)
+  templateVersion    InspectionTemplateVersion? @relation(fields: [templateVersionId], references: [id], onDelete: SetNull)
+  officerId          String?                    @db.Char(36)
+  officer            Officer?                   @relation(fields: [officerId], references: [id], onDelete: SetNull)
+  createdById        String?                    @db.Char(36)
+  createdBy          User?                      @relation("CreatedInspections", fields: [createdById], references: [id], onDelete: SetNull)
+  inspectionDate     DateTime
+  inspectionType     String                     @default("ROUTINE") @db.VarChar(100) // ROUTINE, COMPLAINT_BASED, FOLLOW_UP, SPECIAL
+  inspectorName      String?                    @db.VarChar(255)
+  result             String                     @default("PASSED") @db.VarChar(50) // PASSED, PASSED_CONDITIONAL, FAILED
+  score              Int                        @default(100) // 0 - 100
+  riskLevel          String?                    @db.VarChar(50)
+  problemFound       String?                    @db.Text
+  recommendation     String?                    @db.Text
+  nextFollowupDate   DateTime?
+  followupStatus     String?                    @default("NONE") @db.VarChar(50) // NONE, PENDING, COMPLETED, OVERDUE
+  attachmentUrl      String?                    @db.Text
+  isConfidential     Boolean                    @default(false)
+  formData           Json?
+  verifiedGpsLat     Decimal?                   @db.Decimal(10, 8)
+  verifiedGpsLng     Decimal?                   @db.Decimal(11, 8)
+  createdAt          DateTime                   @default(now())
+  updatedAt          DateTime                   @updatedAt
+
+  findings           InspectionFinding[]
+  answers            InspectionAnswer[]
+  attachments        InspectionAttachment[]
+
+  @@index([businessId])
+  @@index([inspectionDate])
+  @@index([result])
+  @@index([nextFollowupDate])
+  @@index([followupStatus])
+}
+
+model InspectionFinding {
+  id           String     @id @default(uuid()) @db.Char(36)
+  inspectionId String     @db.Char(36)
+  inspection   Inspection @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
+  category     String     @db.VarChar(100) // WASTE, EQUIPMENT, HYGIENE, PHARMACIST, EXPIRED_DRUG, LICENSE, OTHER
+  description  String     @db.Text
+  isCritical   Boolean    @default(false)
+  isRepeated   Boolean    @default(false)
+  rectified    Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+
+  @@index([inspectionId, category])
+  @@index([isCritical])
+  @@index([isRepeated])
+}
+
+model InspectionAnswer {
+  id           String             @id @default(uuid()) @db.Char(36)
+  inspectionId String             @db.Char(36)
+  inspection   Inspection         @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
+  questionId   String             @db.Char(36)
+  question     InspectionQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  passed       Boolean            @default(true)
+  scoreEarned  Float              @default(1.0)
+  textResponse String?            @db.Text
+  photoUrl     String?            @db.Text
+
+  @@index([inspectionId])
+  @@index([questionId])
+}
+
+model InspectionAttachment {
+  id           String     @id @default(uuid()) @db.Char(36)
+  inspectionId String     @db.Char(36)
+  inspection   Inspection @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
+  fileUrl      String     @db.Text
+  fileName     String?    @db.VarChar(255)
+  fileType     String?    @db.VarChar(50) // PDF, IMAGE, DOCUMENT
+  fileSize     Int?
+  caption      String?    @db.VarChar(255)
+  uploadedAt   DateTime   @default(now())
+
+  @@index([inspectionId])
+  @@index([fileType])
+}
+
+// ==========================================
+// 4. SMART INSPECTION PLANNING (GSIE)
+// ==========================================
+
+model InspectionPlan {
+  id             String               @id @default(uuid()) @db.Char(36)
+  organizationId String               @db.Char(36)
+  organization   Organization         @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  title          String               @db.VarChar(255)
+  plannedDate    DateTime             @db.Date
+  scenario       String               @default("BALANCED") @db.VarChar(50) // RISK_FIRST, SHORTEST_ROUTE, MAX_COVERAGE, HOTSPOT_CONTROL, BALANCED
+  status         String               @default("PLANNED") @db.VarChar(50) // DRAFT, PLANNED, IN_PROGRESS, COMPLETED, CANCELLED
+  officerId      String?              @db.Char(36)
+  officer        Officer?             @relation(fields: [officerId], references: [id], onDelete: SetNull)
+  totalStops     Int                  @default(0)
+  totalDistanceKm Float               @default(0.0)
+  estimatedMinutes Int                @default(0)
+  startLocation  String?              @default("สำนักงานสาธารณสุขอำเภอปลวกแดง") @db.VarChar(255)
+  startLat       Decimal?             @default(12.9754) @db.Decimal(10, 8)
+  startLng       Decimal?             @default(101.2154) @db.Decimal(11, 8)
+  notes          String?              @db.Text
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  stops          InspectionPlanStop[]
+
+  @@index([organizationId, plannedDate])
+  @@index([status])
+}
+
+model InspectionPlanStop {
+  id               String         @id @default(uuid()) @db.Char(36)
+  planId           String         @db.Char(36)
+  plan             InspectionPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  businessId       String         @db.Char(36)
+  business         Business       @relation(fields: [businessId], references: [id], onDelete: Restrict)
+  stopOrder        Int
+  scheduledTime    String?        @db.VarChar(20) // e.g., "09:00"
+  estimatedMinutes Int            @default(45)
+  distanceFromPrevKm Float        @default(0.0)
+  priorityScore    Float          @default(0.0) // GSIE computed priority
+  whyThisStop      String         @db.Text // Explainable reason
+  status           String         @default("PENDING") @db.VarChar(50) // PENDING, SKIPPED, VISITED, INSPECTED
+  overrideReason   String?        @db.Text // Human override note
+
+  @@index([planId, stopOrder])
+  @@index([businessId])
+}
+
+// ==========================================
+// 5. COMPLAINTS & PRODUCTS
+// ==========================================
+
+model Complaint {
+  id              String    @id @default(uuid()) @db.Char(36)
+  businessId      String    @db.Char(36)
+  business        Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  complaintDate   DateTime  @default(now())
+  topic           String    @db.VarChar(255)
+  detail          String?   @db.Text
+  complainantName String?   @db.VarChar(255)
+  complainantPhone String?  @db.VarChar(50)
+  severity        String    @default("MEDIUM") @db.VarChar(50) // LOW, MEDIUM, HIGH, URGENT
+  status          String    @default("OPEN") @db.VarChar(50) // OPEN, INVESTIGATING, RESOLVED, DISMISSED
+  actionTaken     String?   @db.Text
+  closeDate       DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([businessId])
+  @@index([complaintDate])
+  @@index([status, severity])
+}
+
+model Product {
+  id             String    @id @default(uuid()) @db.Char(36)
+  businessId     String    @db.Char(36)
+  business       Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  productName    String    @db.VarChar(255)
+  productType    String?   @db.VarChar(100)
+  registrationNo String?   @db.VarChar(100)
+  brand          String?   @db.VarChar(255)
+  manufacturer   String?   @db.VarChar(255)
+  expireDate     DateTime?
+  status         String    @default("ACTIVE") @db.VarChar(50)
+  note           String?   @db.Text
+  createdAt      DateTime  @default(now())
+
+  @@index([businessId])
+  @@index([registrationNo])
+}
+
+// ==========================================
+// 6. GEO-EPIDEMIOLOGY, SIGNALS & HOTSPOTS
+// ==========================================
+
+model RiskSnapshot {
+  id              String   @id @default(uuid()) @db.Char(36)
+  businessId      String   @db.Char(36)
+  business        Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  riskScore       Float
+  riskLevel       String   @db.VarChar(50)
+  algorithmVersion String  @default("GEOEPI-RISK-1.0") @db.VarChar(50)
+  factorBreakdown Json // e.g. [{ factor: 'NON_COMPLIANCE', weight: 20, reason: 'Failed last inspection' }]
+  neighborhoodRisk Float   @default(0.0)
+  createdAt       DateTime @default(now())
+
+  @@index([businessId, createdAt])
+}
+
+model GeoRiskSnapshot {
+  id              String   @id @default(uuid()) @db.Char(36)
+  unitType        String   @db.VarChar(50) // SUBDISTRICT, GRID_1KM, H3_HEX
+  unitId          String   @db.VarChar(100) // e.g. "ปลวกแดง", "H3-8865...", "GRID-12.97-101.21"
+  subdistrict     String?  @db.VarChar(100)
+  district        String   @default("ปลวกแดง") @db.VarChar(100)
+  province        String   @default("ระยอง") @db.VarChar(100)
+  businessCount   Int      @default(0)
+  inspectedCount  Int      @default(0)
+  failedCount     Int      @default(0)
+  complaintCount  Int      @default(0)
+  overdueCount    Int      @default(0)
+  criticalCount   Int      @default(0)
+  averageRisk     Float    @default(0.0)
+  coverageRate    Float    @default(0.0) // Inspected / Total * 100
+  failureRate     Float    @default(0.0) // Failed / Inspected * 100
+  complaintRate   Float    @default(0.0) // Complaints / Total * 100
+  overdueRate     Float    @default(0.0) // Overdue / Due * 100
+  fiscalYear      Int      // e.g. 2568
+  monthYear       String   @db.VarChar(7) // e.g. "2026-09"
+  createdAt       DateTime @default(now())
+
+  @@index([unitType, unitId, fiscalYear])
+  @@index([subdistrict])
+}
+
+model SpatialCluster {
+  id              String       @id @default(uuid()) @db.Char(36)
+  organizationId  String       @db.Char(36)
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  clusterType     String       @default("DBSCAN") @db.VarChar(50) // DBSCAN, HOTSPOT, RISK_CONCENTRATION
+  clusterRisk     String       @default("MODERATE") @db.VarChar(50) // LOW, MODERATE, HIGH, CRITICAL
+  businessCount   Int
+  centroidLat     Decimal      @db.Decimal(10, 8)
+  centroidLng     Decimal      @db.Decimal(11, 8)
+  radiusMeters    Float        @default(500.0)
+  businessIds     Json
+  active          Boolean      @default(true)
+  detectedAt      DateTime     @default(now())
+
+  @@index([organizationId, active])
+}
+
+model SurveillanceEvent {
+  id              String   @id @default(uuid()) @db.Char(36)
+  subdistrict     String   @db.VarChar(100)
+  district        String   @default("ปลวกแดง") @db.VarChar(100)
+  signalType      String   @db.VarChar(100) // SURVEILLANCE_SIGNAL_COMPLAINT_SPIKE, REPEATED_FINDING_CLUSTER, OVERDUE_ACCUMULATION
+  method          String   @default("EWMA") @db.VarChar(50) // MOVING_AVERAGE, EWMA, CUSUM, RULE_BASED
+  currentValue    Float
+  thresholdValue  Float
+  zScore          Float?
+  title           String   @db.VarChar(255)
+  details         String?  @db.Text
+  isAcknowledged  Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  @@index([subdistrict, signalType])
+  @@index([createdAt])
+}
+
+// ==========================================
+// 7. INGESTION, AUDIT & DATA QUALITY
+// ==========================================
+
+model ImportJob {
+  id             String          @id @default(uuid()) @db.Char(36)
+  organizationId String          @db.Char(36)
+  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  fileName       String          @db.VarChar(255)
+  fileType       String          @db.VarChar(50) // XLSX, CSV
+  totalRows      Int             @default(0)
+  successRows    Int             @default(0)
+  failedRows     Int             @default(0)
+  skippedRows    Int             @default(0)
+  status         String          @default("COMPLETED") @db.VarChar(50) // PROCESSING, COMPLETED, FAILED
+  summary        Json?
+  uploaderEmail  String?         @db.VarChar(255)
+  createdAt      DateTime        @default(now())
+  rows           ImportRow[]
+  issues         DataQualityIssue[]
+
+  @@index([organizationId, createdAt])
+}
+
+model ImportRow {
+  id          String    @id @default(uuid()) @db.Char(36)
+  jobId       String    @db.Char(36)
+  job         ImportJob @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  sheetName   String?   @db.VarChar(100)
+  rowNumber   Int
+  businessName String?  @db.VarChar(255)
+  licenseNo   String?   @db.VarChar(100)
+  status      String    @default("SUCCESS") @db.VarChar(50) // SUCCESS, WARNING, ERROR, SKIPPED
+  rawData     Json
+  errorMessage String?  @db.Text
+  createdAt   DateTime  @default(now())
+
+  @@index([jobId, status])
+}
+
+model DataQualityIssue {
+  id           String     @id @default(uuid()) @db.Char(36)
+  businessId   String?    @db.Char(36)
+  business     Business?  @relation(fields: [businessId], references: [id], onDelete: SetNull)
+  importJobId  String?    @db.Char(36)
+  importJob    ImportJob? @relation(fields: [importJobId], references: [id], onDelete: SetNull)
+  issueType    String     @db.VarChar(100) // MISSING_GPS, INVALID_COORDINATES, DUPLICATE_LICENSE, MISSING_LICENSE, MISSING_EXPIRY, NEVER_INSPECTED
+  severity     String     @default("MEDIUM") @db.VarChar(50) // LOW, MEDIUM, HIGH, CRITICAL
+  description  String     @db.Text
+  resolved     Boolean    @default(false)
+  resolvedAt   DateTime?
+  resolvedBy   String?    @db.VarChar(36)
+  createdAt    DateTime   @default(now())
+
+  @@index([issueType, resolved])
+  @@index([businessId])
+}
+
+model AuditLog {
+  id             String    @id @default(uuid()) @db.Char(36)
+  organizationId String?   @db.Char(36)
+  userId         String?   @db.Char(36)
+  user           User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action         String    @db.VarChar(80) // LOGIN, CREATE, UPDATE, DELETE, IMPORT, EXPORT, INSPECTION, PLAN_GENERATED, PLAN_OVERRIDDEN, RISK_RECALCULATED, COORDINATE_CHANGED
+  tableName      String    @db.VarChar(100)
+  recordId       String?   @db.VarChar(36)
+  oldData        Json?
+  newData        Json?
+  ipAddress      String?   @db.VarChar(45)
+  userAgent      String?   @db.VarChar(300)
+  createdAt      DateTime  @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([tableName, recordId])
+  @@index([action])
+}
+
+model Notification {
+  id         String   @id @default(uuid()) @db.Char(36)
+  userId     String?  @db.Char(36)
+  title      String   @db.VarChar(255)
+  message    String   @db.Text
+  type       String   @default("INFO") @db.VarChar(50) // INFO, WARNING, ALERT, SIGNAL
+  isRead     Boolean  @default(false)
+  linkUrl    String?  @db.VarChar(255)
+  createdAt  DateTime @default(now())
+
+  @@index([userId, isRead])
+}
+
+model SystemSetting {
+  id             String        @id @default(uuid()) @db.Char(36)
+  scope          String        @default("GLOBAL") @db.VarChar(36)
+  organizationId String?       @db.Char(36)
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  key            String        @db.VarChar(80)
+  value          Json
+  updatedAt      DateTime      @updatedAt
+
+  @@unique([scope, key])
+  @@index([organizationId])
+}
+
+model RateLimit {
+  key       String   @id @db.Char(64)
+  count     Int      @default(1)
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
