@@ -5,18 +5,25 @@ import { signJwt } from "@/lib/jwt";
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
+    // Accept "identifier" which may be an email address OR a plain username
+    // (e.g. "admintom" stored in the User.email field for login compatibility).
+    // Also accept legacy field name "email" from the existing login page.
+    const body = await req.json();
+    const loginIdentifier: string = (body.identifier || body.email || "").trim();
 
-    if (!email || !password) {
+    if (!loginIdentifier || !body.password) {
       return NextResponse.json(
-        { success: false, error: "กรุณากรอกอีเมลและรหัสผ่าน" },
+        { success: false, error: "กรุณากรอกชื่อผู้ใช้และรหัสผ่าน" },
         { status: 400 }
       );
     }
 
-    // Find user
+    const password: string = body.password;
+
+    // Find user — identifier may be a plain username like "admintom" or a
+    // full email address; both are stored in User.email for compatibility.
     const user = await prisma.user.findFirst({
-      where: { email },
+      where: { email: loginIdentifier },
       include: {
         roles: {
           include: {
