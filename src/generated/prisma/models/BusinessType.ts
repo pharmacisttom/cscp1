@@ -254,6 +254,7 @@ export type BusinessTypeWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"BusinessType"> | Date | string
   businesses?: Prisma.BusinessListRelationFilter
   templates?: Prisma.InspectionTemplateListRelationFilter
+  goals?: Prisma.GoalListRelationFilter
 }
 
 export type BusinessTypeOrderByWithRelationInput = {
@@ -268,6 +269,7 @@ export type BusinessTypeOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   businesses?: Prisma.BusinessOrderByRelationAggregateInput
   templates?: Prisma.InspectionTemplateOrderByRelationAggregateInput
+  goals?: Prisma.GoalOrderByRelationAggregateInput
   _relevance?: Prisma.BusinessTypeOrderByRelevanceInput
 }
 
@@ -286,6 +288,7 @@ export type BusinessTypeWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"BusinessType"> | Date | string
   businesses?: Prisma.BusinessListRelationFilter
   templates?: Prisma.InspectionTemplateListRelationFilter
+  goals?: Prisma.GoalListRelationFilter
 }, "id" | "name" | "code">
 
 export type BusinessTypeOrderByWithAggregationInput = {
@@ -332,6 +335,7 @@ export type BusinessTypeCreateInput = {
   updatedAt?: Date | string
   businesses?: Prisma.BusinessCreateNestedManyWithoutBusinessTypeInput
   templates?: Prisma.InspectionTemplateCreateNestedManyWithoutBusinessTypeInput
+  goals?: Prisma.GoalCreateNestedManyWithoutBusinessTypeInput
 }
 
 export type BusinessTypeUncheckedCreateInput = {
@@ -346,6 +350,7 @@ export type BusinessTypeUncheckedCreateInput = {
   updatedAt?: Date | string
   businesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutBusinessTypeInput
   templates?: Prisma.InspectionTemplateUncheckedCreateNestedManyWithoutBusinessTypeInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutBusinessTypeInput
 }
 
 export type BusinessTypeUpdateInput = {
@@ -360,6 +365,7 @@ export type BusinessTypeUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   businesses?: Prisma.BusinessUpdateManyWithoutBusinessTypeNestedInput
   templates?: Prisma.InspectionTemplateUpdateManyWithoutBusinessTypeNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutBusinessTypeNestedInput
 }
 
 export type BusinessTypeUncheckedUpdateInput = {
@@ -374,6 +380,7 @@ export type BusinessTypeUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   businesses?: Prisma.BusinessUncheckedUpdateManyWithoutBusinessTypeNestedInput
   templates?: Prisma.InspectionTemplateUncheckedUpdateManyWithoutBusinessTypeNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutBusinessTypeNestedInput
 }
 
 export type BusinessTypeCreateManyInput = {
@@ -469,6 +476,11 @@ export type BusinessTypeScalarRelationFilter = {
   isNot?: Prisma.BusinessTypeWhereInput
 }
 
+export type BusinessTypeNullableScalarRelationFilter = {
+  is?: Prisma.BusinessTypeWhereInput | null
+  isNot?: Prisma.BusinessTypeWhereInput | null
+}
+
 export type FloatFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -505,6 +517,22 @@ export type BusinessTypeUpdateOneRequiredWithoutTemplatesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BusinessTypeUpdateToOneWithWhereWithoutTemplatesInput, Prisma.BusinessTypeUpdateWithoutTemplatesInput>, Prisma.BusinessTypeUncheckedUpdateWithoutTemplatesInput>
 }
 
+export type BusinessTypeCreateNestedOneWithoutGoalsInput = {
+  create?: Prisma.XOR<Prisma.BusinessTypeCreateWithoutGoalsInput, Prisma.BusinessTypeUncheckedCreateWithoutGoalsInput>
+  connectOrCreate?: Prisma.BusinessTypeCreateOrConnectWithoutGoalsInput
+  connect?: Prisma.BusinessTypeWhereUniqueInput
+}
+
+export type BusinessTypeUpdateOneWithoutGoalsNestedInput = {
+  create?: Prisma.XOR<Prisma.BusinessTypeCreateWithoutGoalsInput, Prisma.BusinessTypeUncheckedCreateWithoutGoalsInput>
+  connectOrCreate?: Prisma.BusinessTypeCreateOrConnectWithoutGoalsInput
+  upsert?: Prisma.BusinessTypeUpsertWithoutGoalsInput
+  disconnect?: Prisma.BusinessTypeWhereInput | boolean
+  delete?: Prisma.BusinessTypeWhereInput | boolean
+  connect?: Prisma.BusinessTypeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BusinessTypeUpdateToOneWithWhereWithoutGoalsInput, Prisma.BusinessTypeUpdateWithoutGoalsInput>, Prisma.BusinessTypeUncheckedUpdateWithoutGoalsInput>
+}
+
 export type BusinessTypeCreateWithoutBusinessesInput = {
   id?: string
   name: string
@@ -516,6 +544,7 @@ export type BusinessTypeCreateWithoutBusinessesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   templates?: Prisma.InspectionTemplateCreateNestedManyWithoutBusinessTypeInput
+  goals?: Prisma.GoalCreateNestedManyWithoutBusinessTypeInput
 }
 
 export type BusinessTypeUncheckedCreateWithoutBusinessesInput = {
@@ -529,6 +558,7 @@ export type BusinessTypeUncheckedCreateWithoutBusinessesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   templates?: Prisma.InspectionTemplateUncheckedCreateNestedManyWithoutBusinessTypeInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutBusinessTypeInput
 }
 
 export type BusinessTypeCreateOrConnectWithoutBusinessesInput = {
@@ -558,6 +588,7 @@ export type BusinessTypeUpdateWithoutBusinessesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   templates?: Prisma.InspectionTemplateUpdateManyWithoutBusinessTypeNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutBusinessTypeNestedInput
 }
 
 export type BusinessTypeUncheckedUpdateWithoutBusinessesInput = {
@@ -571,6 +602,7 @@ export type BusinessTypeUncheckedUpdateWithoutBusinessesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   templates?: Prisma.InspectionTemplateUncheckedUpdateManyWithoutBusinessTypeNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutBusinessTypeNestedInput
 }
 
 export type BusinessTypeCreateWithoutTemplatesInput = {
@@ -584,6 +616,7 @@ export type BusinessTypeCreateWithoutTemplatesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   businesses?: Prisma.BusinessCreateNestedManyWithoutBusinessTypeInput
+  goals?: Prisma.GoalCreateNestedManyWithoutBusinessTypeInput
 }
 
 export type BusinessTypeUncheckedCreateWithoutTemplatesInput = {
@@ -597,6 +630,7 @@ export type BusinessTypeUncheckedCreateWithoutTemplatesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   businesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutBusinessTypeInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutBusinessTypeInput
 }
 
 export type BusinessTypeCreateOrConnectWithoutTemplatesInput = {
@@ -626,6 +660,7 @@ export type BusinessTypeUpdateWithoutTemplatesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   businesses?: Prisma.BusinessUpdateManyWithoutBusinessTypeNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutBusinessTypeNestedInput
 }
 
 export type BusinessTypeUncheckedUpdateWithoutTemplatesInput = {
@@ -639,6 +674,79 @@ export type BusinessTypeUncheckedUpdateWithoutTemplatesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   businesses?: Prisma.BusinessUncheckedUpdateManyWithoutBusinessTypeNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutBusinessTypeNestedInput
+}
+
+export type BusinessTypeCreateWithoutGoalsInput = {
+  id?: string
+  name: string
+  code: string
+  category?: string
+  baseRisk?: number
+  inspectionIntervalDays?: number
+  icon?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  businesses?: Prisma.BusinessCreateNestedManyWithoutBusinessTypeInput
+  templates?: Prisma.InspectionTemplateCreateNestedManyWithoutBusinessTypeInput
+}
+
+export type BusinessTypeUncheckedCreateWithoutGoalsInput = {
+  id?: string
+  name: string
+  code: string
+  category?: string
+  baseRisk?: number
+  inspectionIntervalDays?: number
+  icon?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  businesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutBusinessTypeInput
+  templates?: Prisma.InspectionTemplateUncheckedCreateNestedManyWithoutBusinessTypeInput
+}
+
+export type BusinessTypeCreateOrConnectWithoutGoalsInput = {
+  where: Prisma.BusinessTypeWhereUniqueInput
+  create: Prisma.XOR<Prisma.BusinessTypeCreateWithoutGoalsInput, Prisma.BusinessTypeUncheckedCreateWithoutGoalsInput>
+}
+
+export type BusinessTypeUpsertWithoutGoalsInput = {
+  update: Prisma.XOR<Prisma.BusinessTypeUpdateWithoutGoalsInput, Prisma.BusinessTypeUncheckedUpdateWithoutGoalsInput>
+  create: Prisma.XOR<Prisma.BusinessTypeCreateWithoutGoalsInput, Prisma.BusinessTypeUncheckedCreateWithoutGoalsInput>
+  where?: Prisma.BusinessTypeWhereInput
+}
+
+export type BusinessTypeUpdateToOneWithWhereWithoutGoalsInput = {
+  where?: Prisma.BusinessTypeWhereInput
+  data: Prisma.XOR<Prisma.BusinessTypeUpdateWithoutGoalsInput, Prisma.BusinessTypeUncheckedUpdateWithoutGoalsInput>
+}
+
+export type BusinessTypeUpdateWithoutGoalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  baseRisk?: Prisma.FloatFieldUpdateOperationsInput | number
+  inspectionIntervalDays?: Prisma.IntFieldUpdateOperationsInput | number
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  businesses?: Prisma.BusinessUpdateManyWithoutBusinessTypeNestedInput
+  templates?: Prisma.InspectionTemplateUpdateManyWithoutBusinessTypeNestedInput
+}
+
+export type BusinessTypeUncheckedUpdateWithoutGoalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  baseRisk?: Prisma.FloatFieldUpdateOperationsInput | number
+  inspectionIntervalDays?: Prisma.IntFieldUpdateOperationsInput | number
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  businesses?: Prisma.BusinessUncheckedUpdateManyWithoutBusinessTypeNestedInput
+  templates?: Prisma.InspectionTemplateUncheckedUpdateManyWithoutBusinessTypeNestedInput
 }
 
 
@@ -649,11 +757,13 @@ export type BusinessTypeUncheckedUpdateWithoutTemplatesInput = {
 export type BusinessTypeCountOutputType = {
   businesses: number
   templates: number
+  goals: number
 }
 
 export type BusinessTypeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   businesses?: boolean | BusinessTypeCountOutputTypeCountBusinessesArgs
   templates?: boolean | BusinessTypeCountOutputTypeCountTemplatesArgs
+  goals?: boolean | BusinessTypeCountOutputTypeCountGoalsArgs
 }
 
 /**
@@ -680,6 +790,13 @@ export type BusinessTypeCountOutputTypeCountTemplatesArgs<ExtArgs extends runtim
   where?: Prisma.InspectionTemplateWhereInput
 }
 
+/**
+ * BusinessTypeCountOutputType without action
+ */
+export type BusinessTypeCountOutputTypeCountGoalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GoalWhereInput
+}
+
 
 export type BusinessTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -693,6 +810,7 @@ export type BusinessTypeSelect<ExtArgs extends runtime.Types.Extensions.Internal
   updatedAt?: boolean
   businesses?: boolean | Prisma.BusinessType$businessesArgs<ExtArgs>
   templates?: boolean | Prisma.BusinessType$templatesArgs<ExtArgs>
+  goals?: boolean | Prisma.BusinessType$goalsArgs<ExtArgs>
   _count?: boolean | Prisma.BusinessTypeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["businessType"]>
 
@@ -714,6 +832,7 @@ export type BusinessTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type BusinessTypeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   businesses?: boolean | Prisma.BusinessType$businessesArgs<ExtArgs>
   templates?: boolean | Prisma.BusinessType$templatesArgs<ExtArgs>
+  goals?: boolean | Prisma.BusinessType$goalsArgs<ExtArgs>
   _count?: boolean | Prisma.BusinessTypeCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -722,6 +841,7 @@ export type $BusinessTypePayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     businesses: Prisma.$BusinessPayload<ExtArgs>[]
     templates: Prisma.$InspectionTemplatePayload<ExtArgs>[]
+    goals: Prisma.$GoalPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1075,6 +1195,7 @@ export interface Prisma__BusinessTypeClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   businesses<T extends Prisma.BusinessType$businessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BusinessType$businessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BusinessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   templates<T extends Prisma.BusinessType$templatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BusinessType$templatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InspectionTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  goals<T extends Prisma.BusinessType$goalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BusinessType$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1506,6 +1627,30 @@ export type BusinessType$templatesArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.InspectionTemplateScalarFieldEnum | Prisma.InspectionTemplateScalarFieldEnum[]
+}
+
+/**
+ * BusinessType.goals
+ */
+export type BusinessType$goalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Goal
+   */
+  select?: Prisma.GoalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Goal
+   */
+  omit?: Prisma.GoalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GoalInclude<ExtArgs> | null
+  where?: Prisma.GoalWhereInput
+  orderBy?: Prisma.GoalOrderByWithRelationInput | Prisma.GoalOrderByWithRelationInput[]
+  cursor?: Prisma.GoalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GoalScalarFieldEnum | Prisma.GoalScalarFieldEnum[]
 }
 
 /**

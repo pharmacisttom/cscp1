@@ -16,7 +16,17 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const scenario = (searchParams.get("scenario") || "BALANCED") as RouteScenario;
     const maxStops = searchParams.get("maxStops") ? parseInt(searchParams.get("maxStops")!, 10) : 6;
-    const subdistrict = searchParams.get("subdistrict") || undefined;
+    let subdistrict = searchParams.get("subdistrict") || undefined;
+
+    // RBAC Enforcement
+    const userRole = request.headers.get("x-user-role");
+    const rawDistrict = request.headers.get("x-user-district");
+    const userDistrict = rawDistrict ? decodeURIComponent(rawDistrict) : null;
+    
+    let districtWhere: any = {};
+    if (userRole === "DISTRICT_ADMIN" || userRole === "INSPECTOR") {
+      districtWhere = { district: userDistrict || "ปลวกแดง" };
+    }
 
     // 1. Fetch eligible candidates
     const businesses = await prisma.business.findMany({
@@ -24,6 +34,7 @@ export async function GET(request: NextRequest) {
         location: {
           latitude: { not: null },
           longitude: { not: null },
+          ...districtWhere,
           ...(subdistrict && subdistrict !== "ALL" ? { subdistrict } : {}),
         },
       },

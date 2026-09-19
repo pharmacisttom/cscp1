@@ -28,6 +28,7 @@ model Organization {
   inspectionPlans InspectionPlan[]
   importJobs     ImportJob[]
   spatialClusters SpatialCluster[]
+  goals          Goal[]
 
   @@index([slug])
 }
@@ -55,6 +56,7 @@ model User {
   officer           Officer?
   inspectionsCreated Inspection[]        @relation("CreatedInspections")
   auditLogs         AuditLog[]
+  goalsCreated      Goal[]
 
   @@unique([organizationId, email])
   @@unique([organizationId, id])
@@ -186,6 +188,7 @@ model BusinessType {
   updatedAt   DateTime   @updatedAt
   businesses  Business[]
   templates   InspectionTemplate[]
+  goals       Goal[]
 }
 
 model Business {
@@ -220,6 +223,7 @@ model Business {
   planStops           InspectionPlanStop[]
   riskSnapshots       RiskSnapshot[]
   dataQualityIssues   DataQualityIssue[]
+  goalBusinesses      GoalBusiness[]
 
   @@index([businessTypeId])
   @@index([organizationId, status])
@@ -728,4 +732,120 @@ model RateLimit {
   expiresAt DateTime
 
   @@index([expiresAt])
+}
+
+// ==========================================
+// 8. GOALS & KPIs
+// ==========================================
+
+model Goal {
+  id             String         @id @default(uuid()) @db.Char(36)
+  organizationId String         @db.Char(36)
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  title          String         @db.VarChar(255)
+  description    String?        @db.Text
+  fiscalYear     Int
+  businessTypeId String?        @db.Char(36)
+  businessType   BusinessType?  @relation(fields: [businessTypeId], references: [id], onDelete: SetNull)
+  deadline       DateTime
+  createdById    String?        @db.Char(36)
+  createdBy      User?          @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  status         String         @default("ACTIVE") @db.VarChar(50) // ACTIVE, LOCKED, COMPLETED
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  districtGoals  DistrictGoal[]
+
+  @@index([organizationId, fiscalYear])
+  @@index([businessTypeId])
+}
+
+model DistrictGoal {
+  id          String         @id @default(uuid()) @db.Char(36)
+  goalId      String         @db.Char(36)
+  goal        Goal           @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  district    String         @db.VarChar(100)
+  targetCount Int            @default(0)
+  status      String         @default("PENDING") @db.VarChar(50) // PENDING, IN_PROGRESS, COMPLETED
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  businesses  GoalBusiness[]
+
+  @@unique([goalId, district])
+}
+
+model GoalBusiness {
+  id             String       @id @default(uuid()) @db.Char(36)
+  districtGoalId String       @db.Char(36)
+  districtGoal   DistrictGoal @relation(fields: [districtGoalId], references: [id], onDelete: Cascade)
+  businessId     String       @db.Char(36)
+  business       Business     @relation(fields: [businessId], references: [id], onDelete: Restrict)
+  status         String       @default("SELECTED") @db.VarChar(50) // SELECTED, INSPECTED
+  createdAt      DateTime     @default(now())
+
+  @@unique([districtGoalId, businessId])
+  @@index([businessId])
+}
+
+// ==========================================
+// 8. ACADEMIC & LEGAL KNOWLEDGE CENTER
+// ==========================================
+
+model KnowledgeLaw {
+  id              String             @id @default(uuid()) @db.Char(36)
+  lawCode         String             @unique @db.VarChar(50)
+  lawNameTh       String             @db.VarChar(255)
+  lawNameEn       String?            @db.VarChar(255)
+  category        String             @db.VarChar(100) // DRUG, FOOD, COSMETIC, MEDICAL_DEVICE, HERB, HAZARDOUS, NARCOTIC, CLINIC, SPA, PROFESSIONAL
+  regulator       String             @db.VarChar(100)
+  status          String             @default("CURRENT") @db.VarChar(50) // CURRENT, UPDATED, REPEALED, VERIFY
+  year            Int?
+  description     String?            @db.Text
+  officialUrl     String?            @db.Text
+  lastVerifiedAt  DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  sections        KnowledgeSection[]
+  cases           KnowledgeCase[]
+}
+
+model KnowledgeSection {
+  id               String       @id @default(uuid()) @db.Char(36)
+  knowledgeLawId   String       @db.Char(36)
+  knowledgeLaw     KnowledgeLaw @relation(fields: [knowledgeLawId], references: [id], onDelete: Cascade)
+  sectionNumber    String       @db.VarChar(50)
+  title            String       @db.VarChar(255)
+  contentSummary   String       @db.Text
+  offenceElements  String?      @db.Text
+  penaltySummary   String?      @db.Text
+  notes            String?      @db.Text
+
+  @@index([knowledgeLawId])
+}
+
+model KnowledgeCase {
+  id                String       @id @default(uuid()) @db.Char(36)
+  knowledgeLawId    String?      @db.Char(36)
+  knowledgeLaw      KnowledgeLaw? @relation(fields: [knowledgeLawId], references: [id], onDelete: SetNull)
+  title             String       @db.VarChar(255)
+  category          String       @db.VarChar(100)
+  scenario          String       @db.Text
+  riskLevel         String       @default("MODERATE") @db.VarChar(50) // LOW, MODERATE, HIGH, CRITICAL
+  recommendedAction String       @db.Text
+  referralAgency    String?      @db.VarChar(100)
+  evidenceRequired  String?      @db.Text
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([knowledgeLawId])
+}
+
+model KnowledgeRoleConfig {
+  id                String    @id @default(uuid()) @db.Char(36)
+  level             String    @db.VarChar(50) // PROVINCE, DISTRICT, HOSPITAL, SUBDISTRICT
+  responsibility    String    @db.Text
+  authorityRequired Boolean   @default(false)
+  referralRules     String?   @db.Text
 }

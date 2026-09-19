@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   Smartphone,
 } from "lucide-react";
+import { IssuesTabs } from "@/components/data-quality/issues-tabs";
 
 export default async function DataQualityPage() {
   const total = await prisma.business.count();
@@ -53,13 +54,21 @@ export default async function DataQualityPage() {
           </p>
         </div>
 
-        <Link
-          href="/inspections/field"
-          className="flex items-center gap-2 rounded-xl bg-teal-600 px-3.5 py-2 text-xs font-bold text-white shadow hover:bg-teal-700"
-        >
-          <Smartphone className="h-4 w-4" />
-          ไปที่ Field Mode เพื่อยืนยัน GPS
-        </Link>
+        <div className="flex gap-2">
+          <Link
+            href="/data-quality/import"
+            className="flex items-center gap-2 rounded-xl bg-white border border-teal-600 px-3.5 py-2 text-xs font-bold text-teal-600 shadow-sm hover:bg-teal-50"
+          >
+            นำเข้าข้อมูลสถานประกอบการ
+          </Link>
+          <Link
+            href="/inspections/field"
+            className="flex items-center gap-2 rounded-xl bg-teal-600 px-3.5 py-2 text-xs font-bold text-white shadow hover:bg-teal-700"
+          >
+            <Smartphone className="h-4 w-4" />
+            ไปที่ Field Mode เพื่อยืนยัน GPS
+          </Link>
+        </div>
       </div>
 
       {/* KPI Cards */}
@@ -106,52 +115,8 @@ export default async function DataQualityPage() {
         </div>
       </div>
 
-      {/* Issues Table */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm overflow-hidden">
-        <h3 className="font-bold text-sm text-slate-900 mb-3">
-          รายการสถานประกอบการที่ต้องตรวจสอบความสมบูรณ์ของข้อมูล ({issues.length} รายการ)
-        </h3>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs border-collapse">
-            <thead>
-              <tr className="border-b border-slate-200 bg-slate-50 text-slate-600 font-semibold">
-                <th className="p-3">สถานประกอบการ</th>
-                <th className="p-3">ประเภท</th>
-                <th className="p-3">ตำบล</th>
-                <th className="p-3">ประเด็นปัญหา</th>
-                <th className="p-3 text-center">ระดับความสำคัญ</th>
-                <th className="p-3 text-right">การจัดการ</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 text-slate-700">
-              {issues.map((issue) => (
-                <tr key={issue.id} className="hover:bg-slate-50/70">
-                  <td className="p-3 font-bold text-slate-900">
-                    {issue.business?.name || "-"}
-                  </td>
-                  <td className="p-3">{issue.business?.businessType.name || "-"}</td>
-                  <td className="p-3">ต.{issue.business?.location?.subdistrict || "-"}</td>
-                  <td className="p-3 text-slate-600">{issue.description}</td>
-                  <td className="p-3 text-center">
-                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800">
-                      {issue.severity}
-                    </span>
-                  </td>
-                  <td className="p-3 text-right">
-                    <Link
-                      href={`/inspections/field?businessId=${issue.businessId}`}
-                      className="text-teal-600 font-bold hover:underline"
-                    >
-                      ยืนยันพิกัด
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {/* Issues Tabs */}
+      <IssuesTabs issues={issues} />
     </div>
   );
 }

@@ -1,15 +1,34 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { calculateDenominatorAwareMetrics, getThaiFiscalYear } from "@/lib/epidemiology/indicators";
 import { detectEwmaSignals, detectCusumSignals } from "@/lib/epidemiology/signals";
 import { detectSpatialClusters } from "@/lib/epidemiology/clusters";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const searchParams = request.nextUrl.searchParams;
+    let level = searchParams.get("level") || "district";
+    let districtName = searchParams.get("districtName") || "ปลวกแดง";
+
+    // RBAC Enforcement
+    const userRole = request.headers.get("x-user-role");
+    const rawDistrict = request.headers.get("x-user-district");
+    const userDistrict = rawDistrict ? decodeURIComponent(rawDistrict) : null;
+
+    if (userRole === "DISTRICT_ADMIN" || userRole === "INSPECTOR") {
+      level = "district";
+      districtName = userDistrict || "ปลวกแดง";
+    }
+
     const fiscalYear = getThaiFiscalYear();
 
-    // 1. Fetch all businesses with location, inspections, complaints
+    // 1. Fetch businesses based on level
     const businesses = await prisma.business.findMany({
+      where: level === "district" ? {
+        location: {
+          district: districtName,
+        }
+      } : {},
       include: {
         businessType: true,
         location: true,
@@ -45,27 +64,33 @@ export async function GET() {
       followupOverdue: 3,
     });
 
-    // 3. Subdistrict Aggregations
-    const subdistrictMap = new Map<string, typeof businesses>();
-    const standardSubdistricts = [
-      "ปลวกแดง",
-      "ตาสิทธิ์",
-      "ละหาร",
-      "แม่น้ำคู้",
-      "มาบยางพร",
-      "หนองไร่",
-    ];
+    // 3. Area Aggregations (District or Subdistrict)
+    const areaMap = new Map<string, typeof businesses>();
+    const isProvinceLevel = level === "province";
 
-    standardSubdistricts.forEach((s) => subdistrictMap.set(s, []));
+    if (!isProvinceLevel && districtName === "ปลวกแดง") {
+      const standardSubdistricts = [
+        "ปลวกแดง",
+        "ตาสิทธิ์",
+        "ละหาร",
+        "แม่น้ำคู้",
+        "มาบยางพร",
+        "หนองไร่",
+      ];
+      standardSubdistricts.forEach((s) => areaMap.set(s, []));
+    }
 
     businesses.forEach((b) => {
-      const sub = b.location?.subdistrict || "ปลวกแดง";
-      if (!subdistrictMap.has(sub)) subdistrictMap.set(sub, []);
-      subdistrictMap.get(sub)!.push(b);
+      const areaKey = isProvinceLevel 
+        ? (b.location?.district || "ไม่ระบุอำเภอ")
+        : (b.location?.subdistrict || "ไม่ระบุตำบล");
+      
+      if (!areaMap.has(areaKey)) areaMap.set(areaKey, []);
+      areaMap.get(areaKey)!.push(b);
     });
 
-    const subdistrictBreakdown = Array.from(subdistrictMap.entries()).map(
-      ([subdistrict, items]) => {
+    const areaBreakdown = Array.from(areaMap.entries()).map(
+      ([areaName, items]) => {
         const count = items.length;
         const subInspected = items.filter((b) => b.inspections.length > 0).length;
         const subFailed = items.filter(
@@ -90,7 +115,7 @@ export async function GET() {
         });
 
         return {
-          subdistrict,
+          areaName,
           total: count,
           inspected: subInspected,
           failed: subFailed,
@@ -146,7 +171,7 @@ export async function GET() {
         withGpsCount,
         missingGpsCount: total - withGpsCount,
       },
-      subdistricts: subdistrictBreakdown,
+      areas: areaBreakdown, // Using generic 'areas' instead of 'subdistricts'
       clusters,
       timeSeries: monthlyData,
       signals: [...ewmaSignals, ...cusumSignals],

@@ -16,6 +16,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { MapMarkerItem } from "@/components/map/smart-map-view";
+import { useAuth } from "@/components/auth/auth-provider";
 
 const SmartMapView = dynamic(() => import("@/components/map/smart-map-view"), {
   ssr: false,
@@ -27,16 +28,31 @@ const SmartMapView = dynamic(() => import("@/components/map/smart-map-view"), {
 });
 
 export default function CommandCenterDashboard() {
+  const { user, isProvinceAdmin, isDistrictAdmin } = useAuth();
+  
   const [indicators, setIndicators] = useState<any | null>(null);
   const [markers, setMarkers] = useState<MapMarkerItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [level, setLevel] = useState<"province" | "district">(isProvinceAdmin ? "province" : "district");
+  const [districtName, setDistrictName] = useState(user?.district && user.district !== "ALL" ? user.district : "ปลวกแดง");
+
+  useEffect(() => {
+    // If context changes, ensure states match RBAC
+    if (isDistrictAdmin && user?.district) {
+      setLevel("district");
+      setDistrictName(user.district);
+    } else if (isProvinceAdmin && user?.district === "ALL" && level !== "district") {
+      setLevel("province");
+    }
+  }, [user, isProvinceAdmin, isDistrictAdmin]);
 
   useEffect(() => {
     async function loadDashboard() {
+      setLoading(true);
       try {
         const [indRes, mapRes] = await Promise.all([
-          fetch("/api/surveillance/indicators"),
-          fetch("/api/map/businesses"),
+          fetch(`/api/surveillance/indicators?level=${level}&districtName=${districtName}`),
+          fetch(`/api/map/businesses?level=${level}&districtName=${districtName}`),
         ]);
         const indJson = await indRes.json();
         const mapJson = await mapRes.json();
@@ -50,7 +66,7 @@ export default function CommandCenterDashboard() {
       }
     }
     loadDashboard();
-  }, []);
+  }, [level, districtName]);
 
   return (
     <div className="flex-1 flex flex-col h-[calc(100vh-4rem)] overflow-hidden">
@@ -60,12 +76,43 @@ export default function CommandCenterDashboard() {
           <div className="flex items-center gap-2">
             <span className="flex h-2.5 w-2.5 rounded-full bg-teal-500 animate-pulse" />
             <h1 className="text-xs sm:text-sm font-bold text-slate-900">
-              District Consumer Health Surveillance Command Center
+              {level === "province" ? "Provincial Consumer Health Surveillance Command Center" : "District Consumer Health Surveillance Command Center"}
             </h1>
             <span className="text-xs text-slate-400 hidden sm:inline">•</span>
             <span className="text-xs text-slate-500 hidden sm:inline">
-              สสอ.ปลวกแดง จ.ระยอง
+              {level === "province" ? "สสจ.ระยอง" : `สสอ.${districtName} จ.ระยอง`}
             </span>
+          </div>
+
+          <div className="flex items-center gap-2 mr-auto ml-4">
+            {isProvinceAdmin && (
+              <>
+                <select
+                  value={level}
+                  onChange={(e) => setLevel(e.target.value as any)}
+                  className="text-xs border border-slate-300 rounded-md shadow-sm p-1"
+                >
+                  <option value="province">สสจ.ระยอง (ภาพรวมจังหวัด)</option>
+                  <option value="district">สสอ. (ภาพรวมอำเภอ)</option>
+                </select>
+                {level === "district" && (
+                  <select
+                    value={districtName}
+                    onChange={(e) => setDistrictName(e.target.value)}
+                    className="text-xs border border-slate-300 rounded-md shadow-sm p-1"
+                  >
+                    <option value="ปลวกแดง">ปลวกแดง</option>
+                    <option value="เมืองระยอง">เมืองระยอง</option>
+                    <option value="บ้านค่าย">บ้านค่าย</option>
+                    <option value="บ้านฉาง">บ้านฉาง</option>
+                    <option value="แกลง">แกลง</option>
+                    <option value="วังจันทร์">วังจันทร์</option>
+                    <option value="เขาชะเมา">เขาชะเมา</option>
+                    <option value="นิคมพัฒนา">นิคมพัฒนา</option>
+                  </select>
+                )}
+              </>
+            )}
           </div>
 
           <div className="flex items-center gap-3 text-xs font-semibold">
@@ -185,26 +232,28 @@ export default function CommandCenterDashboard() {
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                 <ShieldAlert className="h-4 w-4 text-teal-600" />
-                พื้นที่ความเสี่ยงสูงสุดรายตำบล
+                {level === "province" ? "พื้นที่ความเสี่ยงสูงสุดรายอำเภอ" : "พื้นที่ความเสี่ยงสูงสุดรายตำบล"}
               </span>
-              <span className="text-[10px] text-slate-400">อ.ปลวกแดง</span>
+              <span className="text-[10px] text-slate-400">
+                {level === "province" ? "จ.ระยอง" : `อ.${districtName}`}
+              </span>
             </div>
 
             <div className="space-y-1.5 text-xs">
-              {indicators?.subdistricts?.slice(0, 4).map((sub: any) => (
+              {indicators?.areas?.slice(0, 4).map((area: any) => (
                 <div
-                  key={sub.subdistrict}
+                  key={area.areaName}
                   className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100"
                 >
                   <span className="font-medium text-slate-800">
-                    ต.{sub.subdistrict} ({sub.total} แห่ง)
+                    {level === "province" ? `อ.${area.areaName}` : `ต.${area.areaName}`} ({area.total} แห่ง)
                   </span>
                   <div className="flex items-center gap-2">
                     <span className="text-slate-500 text-[11px]">
-                      Coverage {sub.coverageRate}%
+                      Coverage {area.coverageRate}%
                     </span>
                     <span className="font-bold text-amber-700">
-                      Risk {sub.averageRisk}
+                      Risk {area.averageRisk}
                     </span>
                   </div>
                 </div>

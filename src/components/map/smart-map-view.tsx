@@ -119,10 +119,10 @@ export default function SmartMapView({
 
         if (!mapContainerRef.current || !isMounted) return;
 
-        // Pluak Daeng Hospital coordinates center (CSCP Headquarters Base)
+        // Center to Rayong Province approx
         const map = L.map(mapContainerRef.current, {
-          center: [12.969713, 101.219305],
-          zoom: 13,
+          center: [12.6814, 101.2816],
+          zoom: 10,
           zoomControl: false,
         });
 
@@ -258,7 +258,7 @@ export default function SmartMapView({
           }),
           onEachFeature: (feature: any, layer: any) => {
             const name = feature.properties?.name || "ตำบล";
-            layer.bindTooltip(`<b>${name}</b><br/>อ.ปลวกแดง จ.ระยอง`, {
+            layer.bindTooltip(`<b>${name}</b><br/>จ.ระยอง`, {
               sticky: true,
               direction: "top",
             });
@@ -268,42 +268,7 @@ export default function SmartMapView({
 
       const validLatLngs: [number, number][] = [];
 
-      // 4. Render CSCP Center Base: โรงพยาบาลปลวกแดง (Main Inspection Base)
-      const hqLat = 12.969713;
-      const hqLng = 101.219305;
-      validLatLngs.push([hqLat, hqLng]);
-
-      const hqHtml = `
-        <div style="
-          background: linear-gradient(135deg, #0d9488, #0f766e);
-          width: 36px;
-          height: 36px;
-          border-radius: 9999px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          border: 3px solid white;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-          cursor: pointer;
-        " class="hq-pulse">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 6v12M6 12h12"/>
-          </svg>
-        </div>
-      `;
-      const hqIcon = L.divIcon({
-        html: hqHtml,
-        className: "custom-div-icon",
-        iconSize: [36, 36],
-        iconAnchor: [18, 18],
-      });
-      L.marker([hqLat, hqLng], { icon: hqIcon, zIndexOffset: 1000 })
-        .bindTooltip(
-          `<strong>ศูนย์หลัก CSCP: โรงพยาบาลปลวกแดง</strong><br/>จุดหลักตั้งต้นและสิ้นสุดการออกตรวจ จ.ระยอง<br/><span style="color:#0d9488;font-weight:bold;">HQ Base: 12.969713, 101.219305</span>`,
-          { direction: "top", offset: [0, -18] }
-        )
-        .addTo(markerGroup);
+      // 4. Render CSCP Center Base: Removed for multi-district support
 
       // 5. Render Markers with color-blind accessible icons
       if (activeLayers.all_businesses) {
@@ -576,10 +541,14 @@ export default function SmartMapView({
         </div>
       </div>
 
-      {/* Detailed Sliding Drawer */}
+      {/* Detailed Sliding Drawer / Bottom Sheet on Mobile */}
       {isDrawerOpen && (
-        <div className="absolute top-0 right-0 bottom-0 w-full sm:w-[420px] bg-white shadow-2xl z-30 border-l border-slate-200 flex flex-col transition-all">
-          <div className="flex items-center justify-between p-4 border-b border-slate-200 bg-slate-50/50">
+        <div className="absolute top-auto bottom-0 left-0 right-0 h-[70vh] rounded-t-3xl sm:top-0 sm:bottom-0 sm:left-auto sm:right-0 sm:w-[420px] sm:h-full sm:rounded-none bg-white shadow-[0_-10px_40px_rgba(0,0,0,0.1)] sm:shadow-2xl z-[80] border-t sm:border-t-0 sm:border-l border-slate-200 flex flex-col transition-transform duration-300">
+          {/* Mobile Handle */}
+          <div className="w-full flex justify-center pt-3 pb-1 sm:hidden">
+            <div className="w-12 h-1.5 rounded-full bg-slate-300"></div>
+          </div>
+          <div className="flex items-center justify-between px-4 pb-3 pt-2 sm:pt-4 sm:border-b sm:border-slate-200 bg-white sm:bg-slate-50/50">
             <div className="flex items-center gap-2">
               <span className="font-bold text-sm text-slate-800">ข้อมูลสถานประกอบการ</span>
             </div>
@@ -688,10 +657,10 @@ export default function SmartMapView({
                 </div>
 
                 {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-2 pt-2">
+                <div className="grid grid-cols-3 gap-2 pt-2">
                   <a
                     href={`/inspections/new?businessId=${selectedBusiness.id}`}
-                    className="flex items-center justify-center gap-1.5 rounded-xl bg-teal-600 px-3 py-2.5 text-xs font-bold text-white shadow hover:bg-teal-700"
+                    className="flex items-center justify-center gap-1.5 rounded-xl bg-teal-600 px-3 py-2.5 text-xs font-bold text-white shadow hover:bg-teal-700 col-span-3 sm:col-span-1"
                   >
                     <FileText className="h-3.5 w-3.5" />
                     บันทึกผลตรวจ
@@ -701,10 +670,20 @@ export default function SmartMapView({
                     href={`https://www.google.com/maps/dir/?api=1&destination=${selectedBusiness.location?.latitude},${selectedBusiness.location?.longitude}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50"
+                    className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white px-2 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50"
                   >
-                    <Navigation className="h-3.5 w-3.5 text-teal-600" />
-                    นำทาง GPS
+                    <Navigation className="h-3.5 w-3.5 text-blue-600" />
+                    Google Maps
+                  </a>
+
+                  <a
+                    href={`https://map.longdo.com/?p=${selectedBusiness.location?.latitude},${selectedBusiness.location?.longitude}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-300 bg-white px-2 py-2.5 text-xs font-bold text-slate-700 hover:bg-slate-50"
+                  >
+                    <MapPin className="h-3.5 w-3.5 text-orange-600" />
+                    Longdo Map
                   </a>
                 </div>
 

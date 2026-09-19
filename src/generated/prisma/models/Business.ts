@@ -332,6 +332,7 @@ export type BusinessWhereInput = {
   planStops?: Prisma.InspectionPlanStopListRelationFilter
   riskSnapshots?: Prisma.RiskSnapshotListRelationFilter
   dataQualityIssues?: Prisma.DataQualityIssueListRelationFilter
+  goalBusinesses?: Prisma.GoalBusinessListRelationFilter
 }
 
 export type BusinessOrderByWithRelationInput = {
@@ -365,6 +366,7 @@ export type BusinessOrderByWithRelationInput = {
   planStops?: Prisma.InspectionPlanStopOrderByRelationAggregateInput
   riskSnapshots?: Prisma.RiskSnapshotOrderByRelationAggregateInput
   dataQualityIssues?: Prisma.DataQualityIssueOrderByRelationAggregateInput
+  goalBusinesses?: Prisma.GoalBusinessOrderByRelationAggregateInput
   _relevance?: Prisma.BusinessOrderByRelevanceInput
 }
 
@@ -402,6 +404,7 @@ export type BusinessWhereUniqueInput = Prisma.AtLeast<{
   planStops?: Prisma.InspectionPlanStopListRelationFilter
   riskSnapshots?: Prisma.RiskSnapshotListRelationFilter
   dataQualityIssues?: Prisma.DataQualityIssueListRelationFilter
+  goalBusinesses?: Prisma.GoalBusinessListRelationFilter
 }, "id">
 
 export type BusinessOrderByWithAggregationInput = {
@@ -483,6 +486,7 @@ export type BusinessCreateInput = {
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateInput = {
@@ -514,6 +518,7 @@ export type BusinessUncheckedCreateInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUpdateInput = {
@@ -545,6 +550,7 @@ export type BusinessUpdateInput = {
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateInput = {
@@ -576,6 +582,7 @@ export type BusinessUncheckedUpdateInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateManyInput = {
@@ -962,6 +969,20 @@ export type BusinessUpdateOneWithoutDataQualityIssuesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BusinessUpdateToOneWithWhereWithoutDataQualityIssuesInput, Prisma.BusinessUpdateWithoutDataQualityIssuesInput>, Prisma.BusinessUncheckedUpdateWithoutDataQualityIssuesInput>
 }
 
+export type BusinessCreateNestedOneWithoutGoalBusinessesInput = {
+  create?: Prisma.XOR<Prisma.BusinessCreateWithoutGoalBusinessesInput, Prisma.BusinessUncheckedCreateWithoutGoalBusinessesInput>
+  connectOrCreate?: Prisma.BusinessCreateOrConnectWithoutGoalBusinessesInput
+  connect?: Prisma.BusinessWhereUniqueInput
+}
+
+export type BusinessUpdateOneRequiredWithoutGoalBusinessesNestedInput = {
+  create?: Prisma.XOR<Prisma.BusinessCreateWithoutGoalBusinessesInput, Prisma.BusinessUncheckedCreateWithoutGoalBusinessesInput>
+  connectOrCreate?: Prisma.BusinessCreateOrConnectWithoutGoalBusinessesInput
+  upsert?: Prisma.BusinessUpsertWithoutGoalBusinessesInput
+  connect?: Prisma.BusinessWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BusinessUpdateToOneWithWhereWithoutGoalBusinessesInput, Prisma.BusinessUpdateWithoutGoalBusinessesInput>, Prisma.BusinessUncheckedUpdateWithoutGoalBusinessesInput>
+}
+
 export type BusinessCreateWithoutOrganizationInput = {
   id?: string
   name: string
@@ -990,6 +1011,7 @@ export type BusinessCreateWithoutOrganizationInput = {
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutOrganizationInput = {
@@ -1020,6 +1042,7 @@ export type BusinessUncheckedCreateWithoutOrganizationInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutOrganizationInput = {
@@ -1100,6 +1123,7 @@ export type BusinessCreateWithoutBusinessTypeInput = {
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutBusinessTypeInput = {
@@ -1130,6 +1154,7 @@ export type BusinessUncheckedCreateWithoutBusinessTypeInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutBusinessTypeInput = {
@@ -1186,6 +1211,7 @@ export type BusinessCreateWithoutLocationInput = {
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutLocationInput = {
@@ -1216,6 +1242,7 @@ export type BusinessUncheckedCreateWithoutLocationInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutLocationInput = {
@@ -1262,6 +1289,7 @@ export type BusinessUpdateWithoutLocationInput = {
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutLocationInput = {
@@ -1292,6 +1320,7 @@ export type BusinessUncheckedUpdateWithoutLocationInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutLicensesInput = {
@@ -1322,6 +1351,7 @@ export type BusinessCreateWithoutLicensesInput = {
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutLicensesInput = {
@@ -1352,6 +1382,7 @@ export type BusinessUncheckedCreateWithoutLicensesInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutLicensesInput = {
@@ -1398,6 +1429,7 @@ export type BusinessUpdateWithoutLicensesInput = {
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutLicensesInput = {
@@ -1428,6 +1460,7 @@ export type BusinessUncheckedUpdateWithoutLicensesInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutImagesInput = {
@@ -1458,6 +1491,7 @@ export type BusinessCreateWithoutImagesInput = {
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutImagesInput = {
@@ -1488,6 +1522,7 @@ export type BusinessUncheckedCreateWithoutImagesInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutImagesInput = {
@@ -1534,6 +1569,7 @@ export type BusinessUpdateWithoutImagesInput = {
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutImagesInput = {
@@ -1564,6 +1600,7 @@ export type BusinessUncheckedUpdateWithoutImagesInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutDocumentsInput = {
@@ -1594,6 +1631,7 @@ export type BusinessCreateWithoutDocumentsInput = {
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutDocumentsInput = {
@@ -1624,6 +1662,7 @@ export type BusinessUncheckedCreateWithoutDocumentsInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutDocumentsInput = {
@@ -1670,6 +1709,7 @@ export type BusinessUpdateWithoutDocumentsInput = {
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutDocumentsInput = {
@@ -1700,6 +1740,7 @@ export type BusinessUncheckedUpdateWithoutDocumentsInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutInspectionsInput = {
@@ -1730,6 +1771,7 @@ export type BusinessCreateWithoutInspectionsInput = {
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutInspectionsInput = {
@@ -1760,6 +1802,7 @@ export type BusinessUncheckedCreateWithoutInspectionsInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutInspectionsInput = {
@@ -1806,6 +1849,7 @@ export type BusinessUpdateWithoutInspectionsInput = {
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutInspectionsInput = {
@@ -1836,6 +1880,7 @@ export type BusinessUncheckedUpdateWithoutInspectionsInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutPlanStopsInput = {
@@ -1866,6 +1911,7 @@ export type BusinessCreateWithoutPlanStopsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutPlanStopsInput = {
@@ -1896,6 +1942,7 @@ export type BusinessUncheckedCreateWithoutPlanStopsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutPlanStopsInput = {
@@ -1942,6 +1989,7 @@ export type BusinessUpdateWithoutPlanStopsInput = {
   products?: Prisma.ProductUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutPlanStopsInput = {
@@ -1972,6 +2020,7 @@ export type BusinessUncheckedUpdateWithoutPlanStopsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutComplaintsInput = {
@@ -2002,6 +2051,7 @@ export type BusinessCreateWithoutComplaintsInput = {
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutComplaintsInput = {
@@ -2032,6 +2082,7 @@ export type BusinessUncheckedCreateWithoutComplaintsInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutComplaintsInput = {
@@ -2078,6 +2129,7 @@ export type BusinessUpdateWithoutComplaintsInput = {
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutComplaintsInput = {
@@ -2108,6 +2160,7 @@ export type BusinessUncheckedUpdateWithoutComplaintsInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutProductsInput = {
@@ -2138,6 +2191,7 @@ export type BusinessCreateWithoutProductsInput = {
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutProductsInput = {
@@ -2168,6 +2222,7 @@ export type BusinessUncheckedCreateWithoutProductsInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutProductsInput = {
@@ -2214,6 +2269,7 @@ export type BusinessUpdateWithoutProductsInput = {
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutProductsInput = {
@@ -2244,6 +2300,7 @@ export type BusinessUncheckedUpdateWithoutProductsInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutRiskSnapshotsInput = {
@@ -2274,6 +2331,7 @@ export type BusinessCreateWithoutRiskSnapshotsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutBusinessInput
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutRiskSnapshotsInput = {
@@ -2304,6 +2362,7 @@ export type BusinessUncheckedCreateWithoutRiskSnapshotsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBusinessInput
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutRiskSnapshotsInput = {
@@ -2350,6 +2409,7 @@ export type BusinessUpdateWithoutRiskSnapshotsInput = {
   products?: Prisma.ProductUpdateManyWithoutBusinessNestedInput
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutRiskSnapshotsInput = {
@@ -2380,6 +2440,7 @@ export type BusinessUncheckedUpdateWithoutRiskSnapshotsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutBusinessNestedInput
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutDataQualityIssuesInput = {
@@ -2410,6 +2471,7 @@ export type BusinessCreateWithoutDataQualityIssuesInput = {
   products?: Prisma.ProductCreateNestedManyWithoutBusinessInput
   planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutDataQualityIssuesInput = {
@@ -2440,6 +2502,7 @@ export type BusinessUncheckedCreateWithoutDataQualityIssuesInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBusinessInput
   planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutDataQualityIssuesInput = {
@@ -2486,6 +2549,7 @@ export type BusinessUpdateWithoutDataQualityIssuesInput = {
   products?: Prisma.ProductUpdateManyWithoutBusinessNestedInput
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutDataQualityIssuesInput = {
@@ -2516,6 +2580,147 @@ export type BusinessUncheckedUpdateWithoutDataQualityIssuesInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutBusinessNestedInput
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
+}
+
+export type BusinessCreateWithoutGoalBusinessesInput = {
+  id?: string
+  name: string
+  status?: string
+  inspectionStatus?: string
+  riskLevel?: string
+  riskScore?: number
+  lastRiskCalculatedAt?: Date | string | null
+  lastInspectionDate?: Date | string | null
+  nextInspectionDate?: Date | string | null
+  phone?: string | null
+  openingHours?: string | null
+  wasteManagement?: string | null
+  medicalEquipment?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutBusinessesInput
+  businessType: Prisma.BusinessTypeCreateNestedOneWithoutBusinessesInput
+  location?: Prisma.BusinessLocationCreateNestedOneWithoutBusinessInput
+  licenses?: Prisma.BusinessLicenseCreateNestedManyWithoutBusinessInput
+  images?: Prisma.BusinessImageCreateNestedManyWithoutBusinessInput
+  documents?: Prisma.BusinessDocumentCreateNestedManyWithoutBusinessInput
+  inspections?: Prisma.InspectionCreateNestedManyWithoutBusinessInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutBusinessInput
+  products?: Prisma.ProductCreateNestedManyWithoutBusinessInput
+  planStops?: Prisma.InspectionPlanStopCreateNestedManyWithoutBusinessInput
+  riskSnapshots?: Prisma.RiskSnapshotCreateNestedManyWithoutBusinessInput
+  dataQualityIssues?: Prisma.DataQualityIssueCreateNestedManyWithoutBusinessInput
+}
+
+export type BusinessUncheckedCreateWithoutGoalBusinessesInput = {
+  id?: string
+  organizationId: string
+  businessTypeId: string
+  name: string
+  status?: string
+  inspectionStatus?: string
+  riskLevel?: string
+  riskScore?: number
+  lastRiskCalculatedAt?: Date | string | null
+  lastInspectionDate?: Date | string | null
+  nextInspectionDate?: Date | string | null
+  phone?: string | null
+  openingHours?: string | null
+  wasteManagement?: string | null
+  medicalEquipment?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  location?: Prisma.BusinessLocationUncheckedCreateNestedOneWithoutBusinessInput
+  licenses?: Prisma.BusinessLicenseUncheckedCreateNestedManyWithoutBusinessInput
+  images?: Prisma.BusinessImageUncheckedCreateNestedManyWithoutBusinessInput
+  documents?: Prisma.BusinessDocumentUncheckedCreateNestedManyWithoutBusinessInput
+  inspections?: Prisma.InspectionUncheckedCreateNestedManyWithoutBusinessInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutBusinessInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBusinessInput
+  planStops?: Prisma.InspectionPlanStopUncheckedCreateNestedManyWithoutBusinessInput
+  riskSnapshots?: Prisma.RiskSnapshotUncheckedCreateNestedManyWithoutBusinessInput
+  dataQualityIssues?: Prisma.DataQualityIssueUncheckedCreateNestedManyWithoutBusinessInput
+}
+
+export type BusinessCreateOrConnectWithoutGoalBusinessesInput = {
+  where: Prisma.BusinessWhereUniqueInput
+  create: Prisma.XOR<Prisma.BusinessCreateWithoutGoalBusinessesInput, Prisma.BusinessUncheckedCreateWithoutGoalBusinessesInput>
+}
+
+export type BusinessUpsertWithoutGoalBusinessesInput = {
+  update: Prisma.XOR<Prisma.BusinessUpdateWithoutGoalBusinessesInput, Prisma.BusinessUncheckedUpdateWithoutGoalBusinessesInput>
+  create: Prisma.XOR<Prisma.BusinessCreateWithoutGoalBusinessesInput, Prisma.BusinessUncheckedCreateWithoutGoalBusinessesInput>
+  where?: Prisma.BusinessWhereInput
+}
+
+export type BusinessUpdateToOneWithWhereWithoutGoalBusinessesInput = {
+  where?: Prisma.BusinessWhereInput
+  data: Prisma.XOR<Prisma.BusinessUpdateWithoutGoalBusinessesInput, Prisma.BusinessUncheckedUpdateWithoutGoalBusinessesInput>
+}
+
+export type BusinessUpdateWithoutGoalBusinessesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  inspectionStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  lastRiskCalculatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wasteManagement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalEquipment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutBusinessesNestedInput
+  businessType?: Prisma.BusinessTypeUpdateOneRequiredWithoutBusinessesNestedInput
+  location?: Prisma.BusinessLocationUpdateOneWithoutBusinessNestedInput
+  licenses?: Prisma.BusinessLicenseUpdateManyWithoutBusinessNestedInput
+  images?: Prisma.BusinessImageUpdateManyWithoutBusinessNestedInput
+  documents?: Prisma.BusinessDocumentUpdateManyWithoutBusinessNestedInput
+  inspections?: Prisma.InspectionUpdateManyWithoutBusinessNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutBusinessNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBusinessNestedInput
+  planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
+  riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
+  dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+}
+
+export type BusinessUncheckedUpdateWithoutGoalBusinessesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  businessTypeId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  inspectionStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.StringFieldUpdateOperationsInput | string
+  riskScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  lastRiskCalculatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextInspectionDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openingHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wasteManagement?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalEquipment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  location?: Prisma.BusinessLocationUncheckedUpdateOneWithoutBusinessNestedInput
+  licenses?: Prisma.BusinessLicenseUncheckedUpdateManyWithoutBusinessNestedInput
+  images?: Prisma.BusinessImageUncheckedUpdateManyWithoutBusinessNestedInput
+  documents?: Prisma.BusinessDocumentUncheckedUpdateManyWithoutBusinessNestedInput
+  inspections?: Prisma.InspectionUncheckedUpdateManyWithoutBusinessNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutBusinessNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBusinessNestedInput
+  planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
+  riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
+  dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateManyOrganizationInput = {
@@ -2566,6 +2771,7 @@ export type BusinessUpdateWithoutOrganizationInput = {
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutOrganizationInput = {
@@ -2596,6 +2802,7 @@ export type BusinessUncheckedUpdateWithoutOrganizationInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateManyWithoutOrganizationInput = {
@@ -2666,6 +2873,7 @@ export type BusinessUpdateWithoutBusinessTypeInput = {
   planStops?: Prisma.InspectionPlanStopUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutBusinessTypeInput = {
@@ -2696,6 +2904,7 @@ export type BusinessUncheckedUpdateWithoutBusinessTypeInput = {
   planStops?: Prisma.InspectionPlanStopUncheckedUpdateManyWithoutBusinessNestedInput
   riskSnapshots?: Prisma.RiskSnapshotUncheckedUpdateManyWithoutBusinessNestedInput
   dataQualityIssues?: Prisma.DataQualityIssueUncheckedUpdateManyWithoutBusinessNestedInput
+  goalBusinesses?: Prisma.GoalBusinessUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateManyWithoutBusinessTypeInput = {
@@ -2733,6 +2942,7 @@ export type BusinessCountOutputType = {
   planStops: number
   riskSnapshots: number
   dataQualityIssues: number
+  goalBusinesses: number
 }
 
 export type BusinessCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2745,6 +2955,7 @@ export type BusinessCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   planStops?: boolean | BusinessCountOutputTypeCountPlanStopsArgs
   riskSnapshots?: boolean | BusinessCountOutputTypeCountRiskSnapshotsArgs
   dataQualityIssues?: boolean | BusinessCountOutputTypeCountDataQualityIssuesArgs
+  goalBusinesses?: boolean | BusinessCountOutputTypeCountGoalBusinessesArgs
 }
 
 /**
@@ -2820,6 +3031,13 @@ export type BusinessCountOutputTypeCountDataQualityIssuesArgs<ExtArgs extends ru
   where?: Prisma.DataQualityIssueWhereInput
 }
 
+/**
+ * BusinessCountOutputType without action
+ */
+export type BusinessCountOutputTypeCountGoalBusinessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GoalBusinessWhereInput
+}
+
 
 export type BusinessSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2852,6 +3070,7 @@ export type BusinessSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   planStops?: boolean | Prisma.Business$planStopsArgs<ExtArgs>
   riskSnapshots?: boolean | Prisma.Business$riskSnapshotsArgs<ExtArgs>
   dataQualityIssues?: boolean | Prisma.Business$dataQualityIssuesArgs<ExtArgs>
+  goalBusinesses?: boolean | Prisma.Business$goalBusinessesArgs<ExtArgs>
   _count?: boolean | Prisma.BusinessCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["business"]>
 
@@ -2892,6 +3111,7 @@ export type BusinessInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   planStops?: boolean | Prisma.Business$planStopsArgs<ExtArgs>
   riskSnapshots?: boolean | Prisma.Business$riskSnapshotsArgs<ExtArgs>
   dataQualityIssues?: boolean | Prisma.Business$dataQualityIssuesArgs<ExtArgs>
+  goalBusinesses?: boolean | Prisma.Business$goalBusinessesArgs<ExtArgs>
   _count?: boolean | Prisma.BusinessCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -2910,6 +3130,7 @@ export type $BusinessPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     planStops: Prisma.$InspectionPlanStopPayload<ExtArgs>[]
     riskSnapshots: Prisma.$RiskSnapshotPayload<ExtArgs>[]
     dataQualityIssues: Prisma.$DataQualityIssuePayload<ExtArgs>[]
+    goalBusinesses: Prisma.$GoalBusinessPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3282,6 +3503,7 @@ export interface Prisma__BusinessClient<T, Null = never, ExtArgs extends runtime
   planStops<T extends Prisma.Business$planStopsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Business$planStopsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InspectionPlanStopPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   riskSnapshots<T extends Prisma.Business$riskSnapshotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Business$riskSnapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RiskSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dataQualityIssues<T extends Prisma.Business$dataQualityIssuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Business$dataQualityIssuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DataQualityIssuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  goalBusinesses<T extends Prisma.Business$goalBusinessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Business$goalBusinessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GoalBusinessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3909,6 +4131,30 @@ export type Business$dataQualityIssuesArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.DataQualityIssueScalarFieldEnum | Prisma.DataQualityIssueScalarFieldEnum[]
+}
+
+/**
+ * Business.goalBusinesses
+ */
+export type Business$goalBusinessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GoalBusiness
+   */
+  select?: Prisma.GoalBusinessSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GoalBusiness
+   */
+  omit?: Prisma.GoalBusinessOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GoalBusinessInclude<ExtArgs> | null
+  where?: Prisma.GoalBusinessWhereInput
+  orderBy?: Prisma.GoalBusinessOrderByWithRelationInput | Prisma.GoalBusinessOrderByWithRelationInput[]
+  cursor?: Prisma.GoalBusinessWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GoalBusinessScalarFieldEnum | Prisma.GoalBusinessScalarFieldEnum[]
 }
 
 /**

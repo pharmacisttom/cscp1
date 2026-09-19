@@ -217,3 +217,38 @@ export type SystemSetting = Prisma.SystemSettingModel
  * 
  */
 export type RateLimit = Prisma.RateLimitModel
+/**
+ * Model Goal
+ * 
+ */
+export type Goal = Prisma.GoalModel
+/**
+ * Model DistrictGoal
+ * 
+ */
+export type DistrictGoal = Prisma.DistrictGoalModel
+/**
+ * Model GoalBusiness
+ * 
+ */
+export type GoalBusiness = Prisma.GoalBusinessModel
+/**
+ * Model KnowledgeLaw
+ * 
+ */
+export type KnowledgeLaw = Prisma.KnowledgeLawModel
+/**
+ * Model KnowledgeSection
+ * 
+ */
+export type KnowledgeSection = Prisma.KnowledgeSectionModel
+/**
+ * Model KnowledgeCase
+ * 
+ */
+export type KnowledgeCase = Prisma.KnowledgeCaseModel
+/**
+ * Model KnowledgeRoleConfig
+ * 
+ */
+export type KnowledgeRoleConfig = Prisma.KnowledgeRoleConfigModel

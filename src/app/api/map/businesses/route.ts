@@ -4,6 +4,18 @@ import { prisma } from "@/lib/prisma";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
+    let level = searchParams.get("level") || "district";
+    let districtName = searchParams.get("districtName") || "ปลวกแดง";
+    
+    // RBAC Enforcement
+    const userRole = request.headers.get("x-user-role");
+    const rawDistrict = request.headers.get("x-user-district");
+    const userDistrict = rawDistrict ? decodeURIComponent(rawDistrict) : null;
+
+    if (userRole === "DISTRICT_ADMIN" || userRole === "INSPECTOR") {
+      level = "district";
+      districtName = userDistrict || "ปลวกแดง";
+    }
     const minLat = searchParams.get("minLat") ? parseFloat(searchParams.get("minLat")!) : undefined;
     const maxLat = searchParams.get("maxLat") ? parseFloat(searchParams.get("maxLat")!) : undefined;
     const minLng = searchParams.get("minLng") ? parseFloat(searchParams.get("minLng")!) : undefined;
@@ -29,6 +41,11 @@ export async function GET(request: NextRequest) {
     }
 
     const locationWhere: any = {};
+    
+    if (level === "district") {
+      locationWhere.district = districtName;
+    }
+
     if (subdistrict && subdistrict !== "ALL") {
       locationWhere.subdistrict = subdistrict;
     }
@@ -89,7 +106,8 @@ export async function GET(request: NextRequest) {
       name: b.name,
       lat: b.location?.latitude ? Number(b.location.latitude) : null,
       lng: b.location?.longitude ? Number(b.location.longitude) : null,
-      subdistrict: b.location?.subdistrict || "ปลวกแดง",
+      subdistrict: b.location?.subdistrict || "ไม่ระบุตำบล",
+      district: b.location?.district || "ไม่ระบุอำเภอ",
       type: b.businessType.name,
       typeCode: b.businessType.code,
       typeIcon: b.businessType.icon,

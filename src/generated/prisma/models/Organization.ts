@@ -214,6 +214,7 @@ export type OrganizationWhereInput = {
   inspectionPlans?: Prisma.InspectionPlanListRelationFilter
   importJobs?: Prisma.ImportJobListRelationFilter
   spatialClusters?: Prisma.SpatialClusterListRelationFilter
+  goals?: Prisma.GoalListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -233,6 +234,7 @@ export type OrganizationOrderByWithRelationInput = {
   inspectionPlans?: Prisma.InspectionPlanOrderByRelationAggregateInput
   importJobs?: Prisma.ImportJobOrderByRelationAggregateInput
   spatialClusters?: Prisma.SpatialClusterOrderByRelationAggregateInput
+  goals?: Prisma.GoalOrderByRelationAggregateInput
   _relevance?: Prisma.OrganizationOrderByRelevanceInput
 }
 
@@ -256,6 +258,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   inspectionPlans?: Prisma.InspectionPlanListRelationFilter
   importJobs?: Prisma.ImportJobListRelationFilter
   spatialClusters?: Prisma.SpatialClusterListRelationFilter
+  goals?: Prisma.GoalListRelationFilter
 }, "id" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -303,6 +306,7 @@ export type OrganizationCreateInput = {
   inspectionPlans?: Prisma.InspectionPlanCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -322,6 +326,7 @@ export type OrganizationUncheckedCreateInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobUncheckedCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterUncheckedCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -341,6 +346,7 @@ export type OrganizationUpdateInput = {
   inspectionPlans?: Prisma.InspectionPlanUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -360,6 +366,7 @@ export type OrganizationUncheckedUpdateInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUncheckedUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUncheckedUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -570,6 +577,20 @@ export type OrganizationUpdateOneWithoutSettingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutSettingsInput, Prisma.OrganizationUpdateWithoutSettingsInput>, Prisma.OrganizationUncheckedUpdateWithoutSettingsInput>
 }
 
+export type OrganizationCreateNestedOneWithoutGoalsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutGoalsInput, Prisma.OrganizationUncheckedCreateWithoutGoalsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutGoalsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutGoalsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutGoalsInput, Prisma.OrganizationUncheckedCreateWithoutGoalsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutGoalsInput
+  upsert?: Prisma.OrganizationUpsertWithoutGoalsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutGoalsInput, Prisma.OrganizationUpdateWithoutGoalsInput>, Prisma.OrganizationUncheckedUpdateWithoutGoalsInput>
+}
+
 export type OrganizationCreateWithoutUsersInput = {
   id?: string
   slug: string
@@ -586,6 +607,7 @@ export type OrganizationCreateWithoutUsersInput = {
   inspectionPlans?: Prisma.InspectionPlanCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutUsersInput = {
@@ -604,6 +626,7 @@ export type OrganizationUncheckedCreateWithoutUsersInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobUncheckedCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterUncheckedCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutUsersInput = {
@@ -638,6 +661,7 @@ export type OrganizationUpdateWithoutUsersInput = {
   inspectionPlans?: Prisma.InspectionPlanUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutUsersInput = {
@@ -656,6 +680,7 @@ export type OrganizationUncheckedUpdateWithoutUsersInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUncheckedUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUncheckedUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutRolesInput = {
@@ -674,6 +699,7 @@ export type OrganizationCreateWithoutRolesInput = {
   inspectionPlans?: Prisma.InspectionPlanCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutRolesInput = {
@@ -692,6 +718,7 @@ export type OrganizationUncheckedCreateWithoutRolesInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobUncheckedCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterUncheckedCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutRolesInput = {
@@ -726,6 +753,7 @@ export type OrganizationUpdateWithoutRolesInput = {
   inspectionPlans?: Prisma.InspectionPlanUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutRolesInput = {
@@ -744,6 +772,7 @@ export type OrganizationUncheckedUpdateWithoutRolesInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUncheckedUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUncheckedUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutOfficersInput = {
@@ -762,6 +791,7 @@ export type OrganizationCreateWithoutOfficersInput = {
   inspectionPlans?: Prisma.InspectionPlanCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutOfficersInput = {
@@ -780,6 +810,7 @@ export type OrganizationUncheckedCreateWithoutOfficersInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobUncheckedCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterUncheckedCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutOfficersInput = {
@@ -814,6 +845,7 @@ export type OrganizationUpdateWithoutOfficersInput = {
   inspectionPlans?: Prisma.InspectionPlanUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutOfficersInput = {
@@ -832,6 +864,7 @@ export type OrganizationUncheckedUpdateWithoutOfficersInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUncheckedUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUncheckedUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutBusinessesInput = {
@@ -850,6 +883,7 @@ export type OrganizationCreateWithoutBusinessesInput = {
   inspectionPlans?: Prisma.InspectionPlanCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutBusinessesInput = {
@@ -868,6 +902,7 @@ export type OrganizationUncheckedCreateWithoutBusinessesInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobUncheckedCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterUncheckedCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutBusinessesInput = {
@@ -902,6 +937,7 @@ export type OrganizationUpdateWithoutBusinessesInput = {
   inspectionPlans?: Prisma.InspectionPlanUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutBusinessesInput = {
@@ -920,6 +956,7 @@ export type OrganizationUncheckedUpdateWithoutBusinessesInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUncheckedUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUncheckedUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutInspectionPlansInput = {
@@ -938,6 +975,7 @@ export type OrganizationCreateWithoutInspectionPlansInput = {
   officers?: Prisma.OfficerCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInspectionPlansInput = {
@@ -956,6 +994,7 @@ export type OrganizationUncheckedCreateWithoutInspectionPlansInput = {
   officers?: Prisma.OfficerUncheckedCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobUncheckedCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterUncheckedCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutInspectionPlansInput = {
@@ -990,6 +1029,7 @@ export type OrganizationUpdateWithoutInspectionPlansInput = {
   officers?: Prisma.OfficerUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutInspectionPlansInput = {
@@ -1008,6 +1048,7 @@ export type OrganizationUncheckedUpdateWithoutInspectionPlansInput = {
   officers?: Prisma.OfficerUncheckedUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUncheckedUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUncheckedUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSpatialClustersInput = {
@@ -1026,6 +1067,7 @@ export type OrganizationCreateWithoutSpatialClustersInput = {
   officers?: Prisma.OfficerCreateNestedManyWithoutOrganizationInput
   inspectionPlans?: Prisma.InspectionPlanCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSpatialClustersInput = {
@@ -1044,6 +1086,7 @@ export type OrganizationUncheckedCreateWithoutSpatialClustersInput = {
   officers?: Prisma.OfficerUncheckedCreateNestedManyWithoutOrganizationInput
   inspectionPlans?: Prisma.InspectionPlanUncheckedCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobUncheckedCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSpatialClustersInput = {
@@ -1078,6 +1121,7 @@ export type OrganizationUpdateWithoutSpatialClustersInput = {
   officers?: Prisma.OfficerUpdateManyWithoutOrganizationNestedInput
   inspectionPlans?: Prisma.InspectionPlanUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSpatialClustersInput = {
@@ -1096,6 +1140,7 @@ export type OrganizationUncheckedUpdateWithoutSpatialClustersInput = {
   officers?: Prisma.OfficerUncheckedUpdateManyWithoutOrganizationNestedInput
   inspectionPlans?: Prisma.InspectionPlanUncheckedUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUncheckedUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutImportJobsInput = {
@@ -1114,6 +1159,7 @@ export type OrganizationCreateWithoutImportJobsInput = {
   officers?: Prisma.OfficerCreateNestedManyWithoutOrganizationInput
   inspectionPlans?: Prisma.InspectionPlanCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutImportJobsInput = {
@@ -1132,6 +1178,7 @@ export type OrganizationUncheckedCreateWithoutImportJobsInput = {
   officers?: Prisma.OfficerUncheckedCreateNestedManyWithoutOrganizationInput
   inspectionPlans?: Prisma.InspectionPlanUncheckedCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterUncheckedCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutImportJobsInput = {
@@ -1166,6 +1213,7 @@ export type OrganizationUpdateWithoutImportJobsInput = {
   officers?: Prisma.OfficerUpdateManyWithoutOrganizationNestedInput
   inspectionPlans?: Prisma.InspectionPlanUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutImportJobsInput = {
@@ -1184,6 +1232,7 @@ export type OrganizationUncheckedUpdateWithoutImportJobsInput = {
   officers?: Prisma.OfficerUncheckedUpdateManyWithoutOrganizationNestedInput
   inspectionPlans?: Prisma.InspectionPlanUncheckedUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUncheckedUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSettingsInput = {
@@ -1202,6 +1251,7 @@ export type OrganizationCreateWithoutSettingsInput = {
   inspectionPlans?: Prisma.InspectionPlanCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSettingsInput = {
@@ -1220,6 +1270,7 @@ export type OrganizationUncheckedCreateWithoutSettingsInput = {
   inspectionPlans?: Prisma.InspectionPlanUncheckedCreateNestedManyWithoutOrganizationInput
   importJobs?: Prisma.ImportJobUncheckedCreateNestedManyWithoutOrganizationInput
   spatialClusters?: Prisma.SpatialClusterUncheckedCreateNestedManyWithoutOrganizationInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSettingsInput = {
@@ -1254,6 +1305,7 @@ export type OrganizationUpdateWithoutSettingsInput = {
   inspectionPlans?: Prisma.InspectionPlanUpdateManyWithoutOrganizationNestedInput
   importJobs?: Prisma.ImportJobUpdateManyWithoutOrganizationNestedInput
   spatialClusters?: Prisma.SpatialClusterUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSettingsInput = {
@@ -1267,6 +1319,99 @@ export type OrganizationUncheckedUpdateWithoutSettingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
   roles?: Prisma.RoleUncheckedUpdateManyWithoutOrganizationNestedInput
+  businesses?: Prisma.BusinessUncheckedUpdateManyWithoutOrganizationNestedInput
+  officers?: Prisma.OfficerUncheckedUpdateManyWithoutOrganizationNestedInput
+  inspectionPlans?: Prisma.InspectionPlanUncheckedUpdateManyWithoutOrganizationNestedInput
+  importJobs?: Prisma.ImportJobUncheckedUpdateManyWithoutOrganizationNestedInput
+  spatialClusters?: Prisma.SpatialClusterUncheckedUpdateManyWithoutOrganizationNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutGoalsInput = {
+  id?: string
+  slug: string
+  name: string
+  province?: string
+  district?: string
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutOrganizationInput
+  roles?: Prisma.RoleCreateNestedManyWithoutOrganizationInput
+  settings?: Prisma.SystemSettingCreateNestedManyWithoutOrganizationInput
+  businesses?: Prisma.BusinessCreateNestedManyWithoutOrganizationInput
+  officers?: Prisma.OfficerCreateNestedManyWithoutOrganizationInput
+  inspectionPlans?: Prisma.InspectionPlanCreateNestedManyWithoutOrganizationInput
+  importJobs?: Prisma.ImportJobCreateNestedManyWithoutOrganizationInput
+  spatialClusters?: Prisma.SpatialClusterCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutGoalsInput = {
+  id?: string
+  slug: string
+  name: string
+  province?: string
+  district?: string
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutOrganizationInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutOrganizationInput
+  settings?: Prisma.SystemSettingUncheckedCreateNestedManyWithoutOrganizationInput
+  businesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutOrganizationInput
+  officers?: Prisma.OfficerUncheckedCreateNestedManyWithoutOrganizationInput
+  inspectionPlans?: Prisma.InspectionPlanUncheckedCreateNestedManyWithoutOrganizationInput
+  importJobs?: Prisma.ImportJobUncheckedCreateNestedManyWithoutOrganizationInput
+  spatialClusters?: Prisma.SpatialClusterUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutGoalsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutGoalsInput, Prisma.OrganizationUncheckedCreateWithoutGoalsInput>
+}
+
+export type OrganizationUpsertWithoutGoalsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutGoalsInput, Prisma.OrganizationUncheckedUpdateWithoutGoalsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutGoalsInput, Prisma.OrganizationUncheckedCreateWithoutGoalsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutGoalsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutGoalsInput, Prisma.OrganizationUncheckedUpdateWithoutGoalsInput>
+}
+
+export type OrganizationUpdateWithoutGoalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutOrganizationNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutOrganizationNestedInput
+  settings?: Prisma.SystemSettingUpdateManyWithoutOrganizationNestedInput
+  businesses?: Prisma.BusinessUpdateManyWithoutOrganizationNestedInput
+  officers?: Prisma.OfficerUpdateManyWithoutOrganizationNestedInput
+  inspectionPlans?: Prisma.InspectionPlanUpdateManyWithoutOrganizationNestedInput
+  importJobs?: Prisma.ImportJobUpdateManyWithoutOrganizationNestedInput
+  spatialClusters?: Prisma.SpatialClusterUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutGoalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutOrganizationNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutOrganizationNestedInput
+  settings?: Prisma.SystemSettingUncheckedUpdateManyWithoutOrganizationNestedInput
   businesses?: Prisma.BusinessUncheckedUpdateManyWithoutOrganizationNestedInput
   officers?: Prisma.OfficerUncheckedUpdateManyWithoutOrganizationNestedInput
   inspectionPlans?: Prisma.InspectionPlanUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1288,6 +1433,7 @@ export type OrganizationCountOutputType = {
   inspectionPlans: number
   importJobs: number
   spatialClusters: number
+  goals: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1299,6 +1445,7 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   inspectionPlans?: boolean | OrganizationCountOutputTypeCountInspectionPlansArgs
   importJobs?: boolean | OrganizationCountOutputTypeCountImportJobsArgs
   spatialClusters?: boolean | OrganizationCountOutputTypeCountSpatialClustersArgs
+  goals?: boolean | OrganizationCountOutputTypeCountGoalsArgs
 }
 
 /**
@@ -1367,6 +1514,13 @@ export type OrganizationCountOutputTypeCountSpatialClustersArgs<ExtArgs extends 
   where?: Prisma.SpatialClusterWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountGoalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GoalWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1385,6 +1539,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   inspectionPlans?: boolean | Prisma.Organization$inspectionPlansArgs<ExtArgs>
   importJobs?: boolean | Prisma.Organization$importJobsArgs<ExtArgs>
   spatialClusters?: boolean | Prisma.Organization$spatialClustersArgs<ExtArgs>
+  goals?: boolean | Prisma.Organization$goalsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -1411,6 +1566,7 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   inspectionPlans?: boolean | Prisma.Organization$inspectionPlansArgs<ExtArgs>
   importJobs?: boolean | Prisma.Organization$importJobsArgs<ExtArgs>
   spatialClusters?: boolean | Prisma.Organization$spatialClustersArgs<ExtArgs>
+  goals?: boolean | Prisma.Organization$goalsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1425,6 +1581,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     inspectionPlans: Prisma.$InspectionPlanPayload<ExtArgs>[]
     importJobs: Prisma.$ImportJobPayload<ExtArgs>[]
     spatialClusters: Prisma.$SpatialClusterPayload<ExtArgs>[]
+    goals: Prisma.$GoalPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1783,6 +1940,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   inspectionPlans<T extends Prisma.Organization$inspectionPlansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$inspectionPlansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InspectionPlanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   importJobs<T extends Prisma.Organization$importJobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$importJobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImportJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   spatialClusters<T extends Prisma.Organization$spatialClustersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$spatialClustersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SpatialClusterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  goals<T extends Prisma.Organization$goalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2357,6 +2515,30 @@ export type Organization$spatialClustersArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.SpatialClusterScalarFieldEnum | Prisma.SpatialClusterScalarFieldEnum[]
+}
+
+/**
+ * Organization.goals
+ */
+export type Organization$goalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Goal
+   */
+  select?: Prisma.GoalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Goal
+   */
+  omit?: Prisma.GoalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GoalInclude<ExtArgs> | null
+  where?: Prisma.GoalWhereInput
+  orderBy?: Prisma.GoalOrderByWithRelationInput | Prisma.GoalOrderByWithRelationInput[]
+  cursor?: Prisma.GoalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GoalScalarFieldEnum | Prisma.GoalScalarFieldEnum[]
 }
 
 /**

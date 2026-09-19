@@ -290,9 +290,17 @@ export default function SmartInspectionPlannerPage() {
                     href={`https://www.google.com/maps/dir/?api=1&destination=${stop.latitude},${stop.longitude}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="px-3 py-1.5 border border-slate-200 rounded-lg text-slate-700 font-semibold text-[11px] hover:bg-slate-50"
+                    className="px-3 py-1.5 border border-slate-200 rounded-lg text-blue-700 font-semibold text-[11px] hover:bg-slate-50 flex items-center gap-1"
                   >
-                    นำทาง
+                    Google Maps
+                  </a>
+                  <a
+                    href={`https://map.longdo.com/?p=${stop.latitude},${stop.longitude}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3 py-1.5 border border-slate-200 rounded-lg text-orange-700 font-semibold text-[11px] hover:bg-slate-50 flex items-center gap-1"
+                  >
+                    Longdo Map
                   </a>
                 </div>
               </div>

@@ -45,7 +45,7 @@ export default function SurveillancePage() {
     );
   }
 
-  const { metrics, counts, subdistricts, clusters, signals, fiscalYear } = data;
+  const { metrics, counts, areas, clusters, signals, fiscalYear } = data;
 
   return (
     <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
@@ -238,25 +238,29 @@ export default function SurveillancePage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-slate-700">
-              {subdistricts.map((sub: any) => (
-                <tr key={sub.subdistrict} className="hover:bg-slate-50/70">
-                  <td className="p-3 font-bold text-slate-900">ต.{sub.subdistrict}</td>
-                  <td className="p-3 text-right font-medium">{sub.total}</td>
-                  <td className="p-3 text-right">{sub.inspected}</td>
+              {areas?.map((area: any) => (
+                <tr key={area.areaName} className="hover:bg-slate-50/70">
+                  <td className="p-3 font-bold text-slate-900">{area.areaName}</td>
+                  <td className="p-3 text-right font-medium">{area.total}</td>
+                  <td className="p-3 text-right">{area.inspected}</td>
                   <td className="p-3 text-right font-semibold text-teal-700">
-                    {sub.coverageRate}%
+                    {area.coverageRate}%
                   </td>
                   <td className="p-3 text-right text-red-600 font-medium">
-                    {sub.failed}
+                    {area.failed}
                   </td>
-                  <td className="p-3 text-right font-bold text-red-600">
-                    {sub.failureRate}%
+                  <td className="p-3 text-right text-red-700">
+                    {area.failureRate}%
                   </td>
-                  <td className="p-3 text-right">{sub.complaints}</td>
-                  <td className="p-3 text-right text-orange-600 font-medium">
-                    {sub.overdue}
+                  <td className="p-3 text-right text-purple-600">
+                    {area.complaints}
                   </td>
-                  <td className="p-3 text-right font-bold">{sub.averageRisk}</td>
+                  <td className="p-3 text-right text-orange-600 font-bold">
+                    {area.overdue}
+                  </td>
+                  <td className="p-3 text-right font-bold">
+                    {area.averageRisk}
+                  </td>
                 </tr>
               ))}
             </tbody>

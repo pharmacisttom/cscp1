@@ -255,6 +255,7 @@ export type UserWhereInput = {
   officer?: Prisma.XOR<Prisma.OfficerNullableScalarRelationFilter, Prisma.OfficerWhereInput> | null
   inspectionsCreated?: Prisma.InspectionListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
+  goalsCreated?: Prisma.GoalListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -280,6 +281,7 @@ export type UserOrderByWithRelationInput = {
   officer?: Prisma.OfficerOrderByWithRelationInput
   inspectionsCreated?: Prisma.InspectionOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
+  goalsCreated?: Prisma.GoalOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -311,6 +313,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   officer?: Prisma.XOR<Prisma.OfficerNullableScalarRelationFilter, Prisma.OfficerWhereInput> | null
   inspectionsCreated?: Prisma.InspectionListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
+  goalsCreated?: Prisma.GoalListRelationFilter
 }, "id" | "organizationId_email" | "organizationId_id">
 
 export type UserOrderByWithAggregationInput = {
@@ -373,6 +376,7 @@ export type UserCreateInput = {
   officer?: Prisma.OfficerCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -397,6 +401,7 @@ export type UserUncheckedCreateInput = {
   officer?: Prisma.OfficerUncheckedCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionUncheckedCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUpdateInput = {
@@ -421,6 +426,7 @@ export type UserUpdateInput = {
   officer?: Prisma.OfficerUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -445,6 +451,7 @@ export type UserUncheckedUpdateInput = {
   officer?: Prisma.OfficerUncheckedUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUncheckedUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -742,6 +749,22 @@ export type UserUpdateOneWithoutAuditLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.UserUpdateWithoutAuditLogsInput>, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
 }
 
+export type UserCreateNestedOneWithoutGoalsCreatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGoalsCreatedInput, Prisma.UserUncheckedCreateWithoutGoalsCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGoalsCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutGoalsCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGoalsCreatedInput, Prisma.UserUncheckedCreateWithoutGoalsCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGoalsCreatedInput
+  upsert?: Prisma.UserUpsertWithoutGoalsCreatedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGoalsCreatedInput, Prisma.UserUpdateWithoutGoalsCreatedInput>, Prisma.UserUncheckedUpdateWithoutGoalsCreatedInput>
+}
+
 export type UserCreateWithoutOrganizationInput = {
   id?: string
   email: string
@@ -763,6 +786,7 @@ export type UserCreateWithoutOrganizationInput = {
   officer?: Prisma.OfficerCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutOrganizationInput = {
@@ -786,6 +810,7 @@ export type UserUncheckedCreateWithoutOrganizationInput = {
   officer?: Prisma.OfficerUncheckedCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionUncheckedCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutOrganizationInput = {
@@ -854,6 +879,7 @@ export type UserCreateWithoutRolesInput = {
   officer?: Prisma.OfficerCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutRolesInput = {
@@ -877,6 +903,7 @@ export type UserUncheckedCreateWithoutRolesInput = {
   officer?: Prisma.OfficerUncheckedCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionUncheckedCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutRolesInput = {
@@ -916,6 +943,7 @@ export type UserUpdateWithoutRolesInput = {
   officer?: Prisma.OfficerUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRolesInput = {
@@ -939,6 +967,7 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   officer?: Prisma.OfficerUncheckedUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUncheckedUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -962,6 +991,7 @@ export type UserCreateWithoutSessionsInput = {
   officer?: Prisma.OfficerCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -985,6 +1015,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   officer?: Prisma.OfficerUncheckedCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionUncheckedCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -1024,6 +1055,7 @@ export type UserUpdateWithoutSessionsInput = {
   officer?: Prisma.OfficerUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -1047,6 +1079,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   officer?: Prisma.OfficerUncheckedUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUncheckedUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutTwoFactorInput = {
@@ -1070,6 +1103,7 @@ export type UserCreateWithoutTwoFactorInput = {
   officer?: Prisma.OfficerCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutTwoFactorInput = {
@@ -1093,6 +1127,7 @@ export type UserUncheckedCreateWithoutTwoFactorInput = {
   officer?: Prisma.OfficerUncheckedCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionUncheckedCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutTwoFactorInput = {
@@ -1132,6 +1167,7 @@ export type UserUpdateWithoutTwoFactorInput = {
   officer?: Prisma.OfficerUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTwoFactorInput = {
@@ -1155,6 +1191,7 @@ export type UserUncheckedUpdateWithoutTwoFactorInput = {
   officer?: Prisma.OfficerUncheckedUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUncheckedUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutRecoveryCodesInput = {
@@ -1178,6 +1215,7 @@ export type UserCreateWithoutRecoveryCodesInput = {
   officer?: Prisma.OfficerCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutRecoveryCodesInput = {
@@ -1201,6 +1239,7 @@ export type UserUncheckedCreateWithoutRecoveryCodesInput = {
   officer?: Prisma.OfficerUncheckedCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionUncheckedCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutRecoveryCodesInput = {
@@ -1240,6 +1279,7 @@ export type UserUpdateWithoutRecoveryCodesInput = {
   officer?: Prisma.OfficerUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRecoveryCodesInput = {
@@ -1263,6 +1303,7 @@ export type UserUncheckedUpdateWithoutRecoveryCodesInput = {
   officer?: Prisma.OfficerUncheckedUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUncheckedUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutResetsInput = {
@@ -1286,6 +1327,7 @@ export type UserCreateWithoutResetsInput = {
   officer?: Prisma.OfficerCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutResetsInput = {
@@ -1309,6 +1351,7 @@ export type UserUncheckedCreateWithoutResetsInput = {
   officer?: Prisma.OfficerUncheckedCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionUncheckedCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutResetsInput = {
@@ -1348,6 +1391,7 @@ export type UserUpdateWithoutResetsInput = {
   officer?: Prisma.OfficerUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutResetsInput = {
@@ -1371,6 +1415,7 @@ export type UserUncheckedUpdateWithoutResetsInput = {
   officer?: Prisma.OfficerUncheckedUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUncheckedUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutOfficerInput = {
@@ -1394,6 +1439,7 @@ export type UserCreateWithoutOfficerInput = {
   resets?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
   inspectionsCreated?: Prisma.InspectionCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutOfficerInput = {
@@ -1417,6 +1463,7 @@ export type UserUncheckedCreateWithoutOfficerInput = {
   resets?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
   inspectionsCreated?: Prisma.InspectionUncheckedCreateNestedManyWithoutCreatedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutOfficerInput = {
@@ -1456,6 +1503,7 @@ export type UserUpdateWithoutOfficerInput = {
   resets?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOfficerInput = {
@@ -1479,6 +1527,7 @@ export type UserUncheckedUpdateWithoutOfficerInput = {
   resets?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUncheckedUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutInspectionsCreatedInput = {
@@ -1502,6 +1551,7 @@ export type UserCreateWithoutInspectionsCreatedInput = {
   resets?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
   officer?: Prisma.OfficerCreateNestedOneWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutInspectionsCreatedInput = {
@@ -1525,6 +1575,7 @@ export type UserUncheckedCreateWithoutInspectionsCreatedInput = {
   resets?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
   officer?: Prisma.OfficerUncheckedCreateNestedOneWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  goalsCreated?: Prisma.GoalUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutInspectionsCreatedInput = {
@@ -1564,6 +1615,7 @@ export type UserUpdateWithoutInspectionsCreatedInput = {
   resets?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
   officer?: Prisma.OfficerUpdateOneWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInspectionsCreatedInput = {
@@ -1587,6 +1639,7 @@ export type UserUncheckedUpdateWithoutInspectionsCreatedInput = {
   resets?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
   officer?: Prisma.OfficerUncheckedUpdateOneWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -1610,6 +1663,7 @@ export type UserCreateWithoutAuditLogsInput = {
   resets?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
   officer?: Prisma.OfficerCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionCreateNestedManyWithoutCreatedByInput
+  goalsCreated?: Prisma.GoalCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -1633,6 +1687,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   resets?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
   officer?: Prisma.OfficerUncheckedCreateNestedOneWithoutUserInput
   inspectionsCreated?: Prisma.InspectionUncheckedCreateNestedManyWithoutCreatedByInput
+  goalsCreated?: Prisma.GoalUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -1672,6 +1727,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   resets?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
   officer?: Prisma.OfficerUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUpdateManyWithoutCreatedByNestedInput
+  goalsCreated?: Prisma.GoalUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -1695,6 +1751,119 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   resets?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
   officer?: Prisma.OfficerUncheckedUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  goalsCreated?: Prisma.GoalUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserCreateWithoutGoalsCreatedInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName?: string
+  lastName?: string
+  displayName: string
+  status?: string
+  emailVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  passwordChangedAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organization: Prisma.OrganizationCreateNestedOneWithoutUsersInput
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  twoFactor?: Prisma.TwoFactorCredentialCreateNestedOneWithoutUserInput
+  recoveryCodes?: Prisma.RecoveryCodeCreateNestedManyWithoutUserInput
+  resets?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
+  officer?: Prisma.OfficerCreateNestedOneWithoutUserInput
+  inspectionsCreated?: Prisma.InspectionCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutGoalsCreatedInput = {
+  id?: string
+  organizationId: string
+  email: string
+  passwordHash: string
+  firstName?: string
+  lastName?: string
+  displayName: string
+  status?: string
+  emailVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  passwordChangedAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  twoFactor?: Prisma.TwoFactorCredentialUncheckedCreateNestedOneWithoutUserInput
+  recoveryCodes?: Prisma.RecoveryCodeUncheckedCreateNestedManyWithoutUserInput
+  resets?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
+  officer?: Prisma.OfficerUncheckedCreateNestedOneWithoutUserInput
+  inspectionsCreated?: Prisma.InspectionUncheckedCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutGoalsCreatedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutGoalsCreatedInput, Prisma.UserUncheckedCreateWithoutGoalsCreatedInput>
+}
+
+export type UserUpsertWithoutGoalsCreatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutGoalsCreatedInput, Prisma.UserUncheckedUpdateWithoutGoalsCreatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutGoalsCreatedInput, Prisma.UserUncheckedCreateWithoutGoalsCreatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutGoalsCreatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutGoalsCreatedInput, Prisma.UserUncheckedUpdateWithoutGoalsCreatedInput>
+}
+
+export type UserUpdateWithoutGoalsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutUsersNestedInput
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  twoFactor?: Prisma.TwoFactorCredentialUpdateOneWithoutUserNestedInput
+  recoveryCodes?: Prisma.RecoveryCodeUpdateManyWithoutUserNestedInput
+  resets?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
+  officer?: Prisma.OfficerUpdateOneWithoutUserNestedInput
+  inspectionsCreated?: Prisma.InspectionUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutGoalsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  twoFactor?: Prisma.TwoFactorCredentialUncheckedUpdateOneWithoutUserNestedInput
+  recoveryCodes?: Prisma.RecoveryCodeUncheckedUpdateManyWithoutUserNestedInput
+  resets?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
+  officer?: Prisma.OfficerUncheckedUpdateOneWithoutUserNestedInput
+  inspectionsCreated?: Prisma.InspectionUncheckedUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyOrganizationInput = {
@@ -1733,6 +1902,7 @@ export type UserUpdateWithoutOrganizationInput = {
   officer?: Prisma.OfficerUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizationInput = {
@@ -1756,6 +1926,7 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
   officer?: Prisma.OfficerUncheckedUpdateOneWithoutUserNestedInput
   inspectionsCreated?: Prisma.InspectionUncheckedUpdateManyWithoutCreatedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  goalsCreated?: Prisma.GoalUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1785,6 +1956,7 @@ export type UserCountOutputType = {
   resets: number
   inspectionsCreated: number
   auditLogs: number
+  goalsCreated: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1794,6 +1966,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   resets?: boolean | UserCountOutputTypeCountResetsArgs
   inspectionsCreated?: boolean | UserCountOutputTypeCountInspectionsCreatedArgs
   auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
+  goalsCreated?: boolean | UserCountOutputTypeCountGoalsCreatedArgs
 }
 
 /**
@@ -1848,6 +2021,13 @@ export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.AuditLogWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountGoalsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GoalWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1872,6 +2052,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   officer?: boolean | Prisma.User$officerArgs<ExtArgs>
   inspectionsCreated?: boolean | Prisma.User$inspectionsCreatedArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  goalsCreated?: boolean | Prisma.User$goalsCreatedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1904,6 +2085,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   officer?: boolean | Prisma.User$officerArgs<ExtArgs>
   inspectionsCreated?: boolean | Prisma.User$inspectionsCreatedArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  goalsCreated?: boolean | Prisma.User$goalsCreatedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1919,6 +2101,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     officer: Prisma.$OfficerPayload<ExtArgs> | null
     inspectionsCreated: Prisma.$InspectionPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+    goalsCreated: Prisma.$GoalPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2283,6 +2466,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   officer<T extends Prisma.User$officerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$officerArgs<ExtArgs>>): Prisma.Prisma__OfficerClient<runtime.Types.Result.GetResult<Prisma.$OfficerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   inspectionsCreated<T extends Prisma.User$inspectionsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$inspectionsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InspectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  goalsCreated<T extends Prisma.User$goalsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$goalsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2852,6 +3036,30 @@ export type User$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
+}
+
+/**
+ * User.goalsCreated
+ */
+export type User$goalsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Goal
+   */
+  select?: Prisma.GoalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Goal
+   */
+  omit?: Prisma.GoalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GoalInclude<ExtArgs> | null
+  where?: Prisma.GoalWhereInput
+  orderBy?: Prisma.GoalOrderByWithRelationInput | Prisma.GoalOrderByWithRelationInput[]
+  cursor?: Prisma.GoalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GoalScalarFieldEnum | Prisma.GoalScalarFieldEnum[]
 }
 
 /**

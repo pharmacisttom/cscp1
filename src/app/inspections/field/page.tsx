@@ -25,6 +25,8 @@ export default function FieldModePage() {
   const [selectedBusinessId, setSelectedBusinessId] = useState<string>("");
   const [verifying, setVerifying] = useState(false);
   const [verifySuccess, setVerifySuccess] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   // Watch GPS Position
   useEffect(() => {
@@ -164,21 +166,59 @@ export default function FieldModePage() {
           เลือกสถานประกอบการที่ต้องการยืนยันพิกัดหน้างาน
         </span>
 
-        <select
-          value={selectedBusinessId}
-          onChange={(e) => setSelectedBusinessId(e.target.value)}
-          className="w-full rounded-xl border border-slate-300 p-2.5 text-xs text-slate-800 font-medium focus:border-teal-500 focus:outline-none"
-        >
-          {businesses.map((b) => (
-            <option key={b.id} value={b.id}>
-              {b.name} ({b.type} • ต.{b.subdistrict})
-            </option>
-          ))}
-        </select>
+        {(() => {
+          const selectedBusinessName = businesses.find(b => b.id === selectedBusinessId)?.name || "เลือกสถานประกอบการ...";
+          const filteredBusinesses = businesses.filter((b) =>
+            `${b.name} ${b.type} ${b.subdistrict}`.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+
+          return (
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="พิมพ์ชื่อสถานประกอบการเพื่อค้นหา..."
+                value={dropdownOpen ? searchQuery : selectedBusinessName}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setDropdownOpen(true);
+                }}
+                onFocus={() => {
+                  setSearchQuery("");
+                  setDropdownOpen(true);
+                }}
+                onBlur={() => {
+                  setTimeout(() => setDropdownOpen(false), 200);
+                }}
+                className="w-full rounded-xl border border-slate-300 p-2.5 text-xs text-slate-800 font-medium focus:border-teal-500 focus:outline-none"
+              />
+              {dropdownOpen && (
+                <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                  {filteredBusinesses.length > 0 ? (
+                    filteredBusinesses.map((b) => (
+                      <div
+                        key={b.id}
+                        onClick={() => {
+                          setSelectedBusinessId(b.id);
+                          setDropdownOpen(false);
+                        }}
+                        className="p-4 text-sm hover:bg-teal-50 cursor-pointer border-b border-slate-100 last:border-0"
+                      >
+                        <div className="font-bold text-slate-800">{b.name}</div>
+                        <div className="text-xs text-slate-500">{b.type} • ต.{b.subdistrict}</div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-4 text-sm text-slate-500 text-center">ไม่พบสถานประกอบการ</div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         {verifySuccess && (
-          <div className="flex items-center gap-2 rounded-xl bg-emerald-50 p-3 text-xs font-bold text-emerald-800 border border-emerald-200">
-            <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+          <div className="flex items-center gap-2 rounded-xl bg-emerald-50 p-4 text-sm font-bold text-emerald-800 border border-emerald-200">
+            <CheckCircle2 className="h-5 w-5 text-emerald-600" />
             <span>{verifySuccess}</span>
           </div>
         )}
@@ -186,9 +226,9 @@ export default function FieldModePage() {
         <button
           onClick={handleVerifyLocation}
           disabled={verifying || !currentGps}
-          className="w-full py-3 bg-teal-600 text-white rounded-xl font-bold text-xs shadow-md hover:bg-teal-700 disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full py-4 bg-teal-600 text-white rounded-xl font-bold text-sm shadow-md hover:bg-teal-700 disabled:opacity-50 flex items-center justify-center gap-2"
         >
-          <ShieldCheck className="h-4 w-4" />
+          <ShieldCheck className="h-5 w-5" />
           {verifying ? "กำลังบันทึกพิกัด..." : "ยืนยันพิกัดสถานประกอบการนี้ (Verify GPS)"}
         </button>
       </div>
@@ -197,9 +237,9 @@ export default function FieldModePage() {
       {selectedBusinessId && (
         <a
           href={`/inspections/new?businessId=${selectedBusinessId}`}
-          className="w-full py-3 border border-teal-600 text-teal-700 bg-teal-50/50 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-teal-100/50"
+          className="w-full py-4 border-2 border-teal-600 text-teal-700 bg-teal-50/50 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-teal-100/50"
         >
-          <Camera className="h-4 w-4" />
+          <Camera className="h-5 w-5" />
           เปิดแบบตรวจประเมินหน้างาน & ถ่ายภาพ
         </a>
       )}

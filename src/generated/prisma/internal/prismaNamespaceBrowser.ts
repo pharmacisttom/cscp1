@@ -90,7 +90,14 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   Notification: 'Notification',
   SystemSetting: 'SystemSetting',
-  RateLimit: 'RateLimit'
+  RateLimit: 'RateLimit',
+  Goal: 'Goal',
+  DistrictGoal: 'DistrictGoal',
+  GoalBusiness: 'GoalBusiness',
+  KnowledgeLaw: 'KnowledgeLaw',
+  KnowledgeSection: 'KnowledgeSection',
+  KnowledgeCase: 'KnowledgeCase',
+  KnowledgeRoleConfig: 'KnowledgeRoleConfig'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -721,6 +728,108 @@ export const RateLimitScalarFieldEnum = {
 export type RateLimitScalarFieldEnum = (typeof RateLimitScalarFieldEnum)[keyof typeof RateLimitScalarFieldEnum]
 
 
+export const GoalScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  title: 'title',
+  description: 'description',
+  fiscalYear: 'fiscalYear',
+  businessTypeId: 'businessTypeId',
+  deadline: 'deadline',
+  createdById: 'createdById',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GoalScalarFieldEnum = (typeof GoalScalarFieldEnum)[keyof typeof GoalScalarFieldEnum]
+
+
+export const DistrictGoalScalarFieldEnum = {
+  id: 'id',
+  goalId: 'goalId',
+  district: 'district',
+  targetCount: 'targetCount',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DistrictGoalScalarFieldEnum = (typeof DistrictGoalScalarFieldEnum)[keyof typeof DistrictGoalScalarFieldEnum]
+
+
+export const GoalBusinessScalarFieldEnum = {
+  id: 'id',
+  districtGoalId: 'districtGoalId',
+  businessId: 'businessId',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type GoalBusinessScalarFieldEnum = (typeof GoalBusinessScalarFieldEnum)[keyof typeof GoalBusinessScalarFieldEnum]
+
+
+export const KnowledgeLawScalarFieldEnum = {
+  id: 'id',
+  lawCode: 'lawCode',
+  lawNameTh: 'lawNameTh',
+  lawNameEn: 'lawNameEn',
+  category: 'category',
+  regulator: 'regulator',
+  status: 'status',
+  year: 'year',
+  description: 'description',
+  officialUrl: 'officialUrl',
+  lastVerifiedAt: 'lastVerifiedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KnowledgeLawScalarFieldEnum = (typeof KnowledgeLawScalarFieldEnum)[keyof typeof KnowledgeLawScalarFieldEnum]
+
+
+export const KnowledgeSectionScalarFieldEnum = {
+  id: 'id',
+  knowledgeLawId: 'knowledgeLawId',
+  sectionNumber: 'sectionNumber',
+  title: 'title',
+  contentSummary: 'contentSummary',
+  offenceElements: 'offenceElements',
+  penaltySummary: 'penaltySummary',
+  notes: 'notes'
+} as const
+
+export type KnowledgeSectionScalarFieldEnum = (typeof KnowledgeSectionScalarFieldEnum)[keyof typeof KnowledgeSectionScalarFieldEnum]
+
+
+export const KnowledgeCaseScalarFieldEnum = {
+  id: 'id',
+  knowledgeLawId: 'knowledgeLawId',
+  title: 'title',
+  category: 'category',
+  scenario: 'scenario',
+  riskLevel: 'riskLevel',
+  recommendedAction: 'recommendedAction',
+  referralAgency: 'referralAgency',
+  evidenceRequired: 'evidenceRequired',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KnowledgeCaseScalarFieldEnum = (typeof KnowledgeCaseScalarFieldEnum)[keyof typeof KnowledgeCaseScalarFieldEnum]
+
+
+export const KnowledgeRoleConfigScalarFieldEnum = {
+  id: 'id',
+  level: 'level',
+  responsibility: 'responsibility',
+  authorityRequired: 'authorityRequired',
+  referralRules: 'referralRules'
+} as const
+
+export type KnowledgeRoleConfigScalarFieldEnum = (typeof KnowledgeRoleConfigScalarFieldEnum)[keyof typeof KnowledgeRoleConfigScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1235,4 +1344,91 @@ export const RateLimitOrderByRelevanceFieldEnum = {
 } as const
 
 export type RateLimitOrderByRelevanceFieldEnum = (typeof RateLimitOrderByRelevanceFieldEnum)[keyof typeof RateLimitOrderByRelevanceFieldEnum]
+
+
+export const GoalOrderByRelevanceFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  title: 'title',
+  description: 'description',
+  businessTypeId: 'businessTypeId',
+  createdById: 'createdById',
+  status: 'status'
+} as const
+
+export type GoalOrderByRelevanceFieldEnum = (typeof GoalOrderByRelevanceFieldEnum)[keyof typeof GoalOrderByRelevanceFieldEnum]
+
+
+export const DistrictGoalOrderByRelevanceFieldEnum = {
+  id: 'id',
+  goalId: 'goalId',
+  district: 'district',
+  status: 'status'
+} as const
+
+export type DistrictGoalOrderByRelevanceFieldEnum = (typeof DistrictGoalOrderByRelevanceFieldEnum)[keyof typeof DistrictGoalOrderByRelevanceFieldEnum]
+
+
+export const GoalBusinessOrderByRelevanceFieldEnum = {
+  id: 'id',
+  districtGoalId: 'districtGoalId',
+  businessId: 'businessId',
+  status: 'status'
+} as const
+
+export type GoalBusinessOrderByRelevanceFieldEnum = (typeof GoalBusinessOrderByRelevanceFieldEnum)[keyof typeof GoalBusinessOrderByRelevanceFieldEnum]
+
+
+export const KnowledgeLawOrderByRelevanceFieldEnum = {
+  id: 'id',
+  lawCode: 'lawCode',
+  lawNameTh: 'lawNameTh',
+  lawNameEn: 'lawNameEn',
+  category: 'category',
+  regulator: 'regulator',
+  status: 'status',
+  description: 'description',
+  officialUrl: 'officialUrl'
+} as const
+
+export type KnowledgeLawOrderByRelevanceFieldEnum = (typeof KnowledgeLawOrderByRelevanceFieldEnum)[keyof typeof KnowledgeLawOrderByRelevanceFieldEnum]
+
+
+export const KnowledgeSectionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  knowledgeLawId: 'knowledgeLawId',
+  sectionNumber: 'sectionNumber',
+  title: 'title',
+  contentSummary: 'contentSummary',
+  offenceElements: 'offenceElements',
+  penaltySummary: 'penaltySummary',
+  notes: 'notes'
+} as const
+
+export type KnowledgeSectionOrderByRelevanceFieldEnum = (typeof KnowledgeSectionOrderByRelevanceFieldEnum)[keyof typeof KnowledgeSectionOrderByRelevanceFieldEnum]
+
+
+export const KnowledgeCaseOrderByRelevanceFieldEnum = {
+  id: 'id',
+  knowledgeLawId: 'knowledgeLawId',
+  title: 'title',
+  category: 'category',
+  scenario: 'scenario',
+  riskLevel: 'riskLevel',
+  recommendedAction: 'recommendedAction',
+  referralAgency: 'referralAgency',
+  evidenceRequired: 'evidenceRequired'
+} as const
+
+export type KnowledgeCaseOrderByRelevanceFieldEnum = (typeof KnowledgeCaseOrderByRelevanceFieldEnum)[keyof typeof KnowledgeCaseOrderByRelevanceFieldEnum]
+
+
+export const KnowledgeRoleConfigOrderByRelevanceFieldEnum = {
+  id: 'id',
+  level: 'level',
+  responsibility: 'responsibility',
+  referralRules: 'referralRules'
+} as const
+
+export type KnowledgeRoleConfigOrderByRelevanceFieldEnum = (typeof KnowledgeRoleConfigOrderByRelevanceFieldEnum)[keyof typeof KnowledgeRoleConfigOrderByRelevanceFieldEnum]
 

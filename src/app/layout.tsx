@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { Header } from "@/components/navigation/header";
+import { Footer } from "@/components/footer/Footer";
+import { BottomNav } from "@/components/navigation/bottom-nav";
+import { AuthProvider } from "@/components/auth/auth-provider";
+import { verifyJwt } from "@/lib/jwt";
 
 export const metadata: Metadata = {
   title: "CSCP GeoEpi | Consumer Safety & Geo-Epidemiological Intelligence",
@@ -8,11 +13,19 @@ export const metadata: Metadata = {
     "Smart Map, Geo-Epidemiology & Intelligent Inspection Planning Platform for District Consumer Protection",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("cscp_session")?.value;
+  let userSession = null;
+  
+  if (token) {
+    userSession = await verifyJwt(token);
+  }
+
   return (
     <html lang="th">
       <head>
@@ -28,8 +41,12 @@ export default function RootLayout({
         ></script>
       </head>
       <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased selection:bg-teal-500 selection:text-white">
-        <Header />
-        <main className="flex-1 flex flex-col">{children}</main>
+        <AuthProvider user={userSession}>
+          <Header />
+          <main className="flex-1 flex flex-col pb-[68px] md:pb-0">{children}</main>
+          <Footer />
+          <BottomNav />
+        </AuthProvider>
       </body>
     </html>
   );
