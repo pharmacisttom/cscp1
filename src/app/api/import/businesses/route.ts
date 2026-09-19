@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isAdmin } from "@/lib/rbac";
 
 export async function POST(request: NextRequest) {
   try {
@@ -77,7 +78,7 @@ export async function POST(request: NextRequest) {
         }
 
         // 2. Enforce RBAC (District Admin can only import for their own district)
-        if (userRole !== "PROVINCE_ADMIN" && district !== userDistrict) {
+        if (!isAdmin(userRole) && district !== userDistrict) {
           throw new Error(`Permission Denied: Cannot import data for ${district}`);
         }
 

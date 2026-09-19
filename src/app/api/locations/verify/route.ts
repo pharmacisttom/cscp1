@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    const userId = request.headers.get("x-user-id") || "SYSTEM";
     const { businessId, latitude, longitude, accuracy, officerId } = body;
 
     if (!businessId || latitude === undefined || longitude === undefined) {
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
         coordinateSource: "VERIFIED_GPS",
         verified: true,
         verifiedAt: new Date(),
-        verifiedBy: officerId || "INSPECTOR_FIELD",
+        verifiedBy: officerId || userId,
         geocodeStatus: "SUCCESS",
       },
     });
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
       data: {
         resolved: true,
         resolvedAt: new Date(),
-        resolvedBy: officerId || "INSPECTOR_FIELD",
+        resolvedBy: officerId || userId,
       },
     });
 

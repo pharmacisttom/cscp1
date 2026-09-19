@@ -3,13 +3,15 @@ import { prisma } from "@/lib/prisma";
 import { verifyPassword } from "@/lib/password"; // Used for future if needed
 import * as argon2 from "argon2";
 
+import { canManageUsers } from "@/lib/rbac";
+
 // GET: List all users and their roles
 export async function GET(request: NextRequest) {
   try {
     const userRole = request.headers.get("x-user-role");
 
-    // Only PROVINCE_ADMIN can view user list
-    if (userRole !== "PROVINCE_ADMIN") {
+    // Only authorized admins can view user list
+    if (!canManageUsers(userRole)) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 403 });
     }
 
@@ -47,8 +49,8 @@ export async function POST(request: NextRequest) {
   try {
     const userRoleHeader = request.headers.get("x-user-role");
 
-    // Only PROVINCE_ADMIN can create users
-    if (userRoleHeader !== "PROVINCE_ADMIN") {
+    // Only authorized admins can create users
+    if (!canManageUsers(userRoleHeader)) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 403 });
     }
 
@@ -80,12 +82,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: "อีเมล/บัญชีผู้ใช้งานนี้มีในระบบแล้ว" }, { status: 400 });
     }
 
-    const distAdminRole = await prisma.role.findFirst({
-      where: { name: "DISTRICT_ADMIN", organizationId: org.id },
+    let districtAdminRole = await prisma.role.findFirst({
+      where: { name: "DISTRICT_MANAGER", organizationId: org.id },
     });
 
-    if (!distAdminRole) {
-      return NextResponse.json({ success: false, error: "DISTRICT_ADMIN role not found" }, { status: 500 });
+    if (!districtAdminRole) {
+      return NextResponse.json({ success: false, error: "DISTRICT_MANAGER role not found" }, { status: 500 });
     }
 
     const passwordHash = await argon2.hash(password);
@@ -116,7 +118,7 @@ export async function POST(request: NextRequest) {
         data: {
           organizationId: org.id,
           userId: user.id,
-          roleId: distAdminRole.id,
+          roleId: districtAdminRole.id,
         },
       });
 

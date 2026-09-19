@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isAdmin } from "@/lib/rbac";
 
 export async function PUT(
   request: NextRequest,
@@ -9,7 +10,7 @@ export async function PUT(
     const orgId = request.headers.get("x-user-org-id");
     const role = request.headers.get("x-user-role");
     
-    if (!orgId || role !== "PROVINCE_ADMIN") {
+    if (!orgId || !isAdmin(role)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

@@ -44,10 +44,17 @@ export async function POST(req: Request) {
     }
 
     // Determine role (simplified, assume user has one role)
-    const roleName = user.roles[0]?.role?.name || "VIEWER";
+    let dbRoleName = user.roles[0]?.role?.name || "VIEWER";
+    
+    // Canonical mapping for legacy DB roles
+    let roleName = dbRoleName;
+    if (dbRoleName === "PROVINCE_ADMIN") roleName = "ADMIN";
+    if (dbRoleName === "DISTRICT_ADMIN") roleName = "DISTRICT_MANAGER";
+    if (dbRoleName === "INSPECTOR_FIELD") roleName = "INSPECTOR";
+
     let district = "ALL"; // Default for SSJ
 
-    if (roleName === "DISTRICT_ADMIN" || roleName === "INSPECTOR") {
+    if (roleName === "DISTRICT_MANAGER" || roleName === "INSPECTOR") {
       district = user.officer?.district || "ปลวกแดง";
     }
 

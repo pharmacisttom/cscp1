@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isAdmin } from "@/lib/rbac";
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,7 +14,7 @@ export async function GET(request: NextRequest) {
       district = decodeURIComponent(district);
     }
 
-    if (role === "PROVINCE_ADMIN") {
+    if (isAdmin(role)) {
       // Province admin gets all goals
       const goals = await prisma.goal.findMany({
         where: { organizationId: orgId },

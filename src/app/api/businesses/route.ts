@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isAdmin } from "@/lib/rbac";
 
 export async function GET(request: NextRequest) {
   try {
@@ -18,7 +19,9 @@ export async function GET(request: NextRequest) {
 
     const where: any = { organizationId: orgId };
     
-    if (district && district !== "undefined" && request.headers.get("x-user-role") !== "PROVINCE_ADMIN") {
+    const userRole = request.headers.get("x-user-role");
+    
+    if (district && district !== "undefined" && !isAdmin(userRole)) {
       where.location = { district: district };
     }
 

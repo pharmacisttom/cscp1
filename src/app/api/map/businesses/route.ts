@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     const rawDistrict = request.headers.get("x-user-district");
     const userDistrict = rawDistrict ? decodeURIComponent(rawDistrict) : null;
 
-    if (userRole === "DISTRICT_ADMIN" || userRole === "INSPECTOR") {
+    if (userRole === "DISTRICT_MANAGER" || userRole === "INSPECTOR") {
       level = "district";
       districtName = userDistrict || "ปลวกแดง";
     }

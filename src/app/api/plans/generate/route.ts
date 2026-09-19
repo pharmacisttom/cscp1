@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     const userDistrict = rawDistrict ? decodeURIComponent(rawDistrict) : null;
     
     let districtWhere: any = {};
-    if (userRole === "DISTRICT_ADMIN" || userRole === "INSPECTOR") {
+    if (userRole === "DISTRICT_MANAGER" || userRole === "INSPECTOR") {
       districtWhere = { district: userDistrict || "ปลวกแดง" };
     }
 

@@ -2,13 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import * as argon2 from "argon2";
 
+import { canManageUsers } from "@/lib/rbac";
+
 // Helper to check auth
 async function checkAuth(request: NextRequest) {
   const userRole = request.headers.get("x-user-role");
-  if (userRole !== "PROVINCE_ADMIN") {
-    return false;
-  }
-  return true;
+  return canManageUsers(userRole);
 }
 
 export async function PUT(
