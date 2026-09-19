@@ -29,3 +29,9 @@ tomvis_ref/
 *.njsproj
 *.sln
 *.sw?
+
+# Local backup exports
+backups/
+
+# TypeScript incremental build cache (generated, not source)
+*.tsbuildinfo

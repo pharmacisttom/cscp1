@@ -4,6 +4,10 @@
  * Usage:
  *   CSCP_BOOTSTRAP_ADMIN_PASSWORD="<strong-password>" npx ts-node scripts/add-admintom.ts
  *
+ * Optional env vars:
+ *   CSCP_BOOTSTRAP_ORG_SLUG  — organization slug to bootstrap against
+ *                              (default: "pluakdaeng-health")
+ *
  * Rules:
  *  - Password is read from CSCP_BOOTSTRAP_ADMIN_PASSWORD env var only.
  *  - Password must be at least 12 characters.
@@ -43,14 +47,19 @@ async function main() {
   console.log("[bootstrap] Validating environment...");
 
   // ── 2. Locate the organization ────────────────────────────────────────────
+  // Allow override via env var so the same script works across environments.
+  const orgSlug = process.env.CSCP_BOOTSTRAP_ORG_SLUG || "pluakdaeng-health";
+  console.log(`[bootstrap] Looking up organization slug: '${orgSlug}'...`);
+
   const org = await prisma.organization.findFirst({
-    where: { slug: "rayong-health" },
+    where: { slug: orgSlug },
   });
 
   if (!org) {
     console.error(
-      "[ABORT] Organization with slug 'rayong-health' was not found in the database.\n" +
-        "        Ensure the database has been seeded with the required organization data."
+      `[ABORT] Organization with slug '${orgSlug}' was not found in the database.\n` +
+        `        Set CSCP_BOOTSTRAP_ORG_SLUG to the correct organization slug, or\n` +
+        `        ensure the database has been seeded with the required organization data.`
     );
     process.exit(1);
   }
