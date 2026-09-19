@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/auth/auth-provider";
 import { DistrictModuleGate } from "@/components/auth/district-module-gate";
+import { ConfidentialModal } from "@/components/inspections/confidential-modal";
 import {
   ClipboardCheck,
   FileText,
@@ -18,14 +19,42 @@ import {
   ShieldAlert,
   Building2,
   Plus,
+  Lock,
+  Unlock,
+  ShieldCheck,
 } from "lucide-react";
 
+interface Inspection {
+  id: string;
+  inspectionDate: string;
+  inspectorName: string | null;
+  result: string;
+  score: number;
+  problemFound: string | null;
+  recommendation: string | null;
+  nextFollowupDate: string | null;
+  isConfidential: boolean;
+  business: {
+    name: string;
+    businessType: { name: string };
+    riskScore: number;
+    riskLevel: string;
+  } | null;
+  findings: any[];
+  attachments: { id: string; fileUrl: string; fileName: string | null; fileType: string | null }[];
+}
+
 export default function InspectionsHistoryPage() {
-  const { moduleAccess } = useAuth();
-  const [inspections, setInspections] = useState<any[]>([]);
+  const { isSuperAdmin, moduleAccess } = useAuth();
+
+  const [inspections, setInspections] = useState<Inspection[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [resultFilter, setResultFilter] = useState("ALL");
+  const [confidentialCount, setConfidentialCount] = useState(0);
+
+  // Modal state
+  const [modalInspection, setModalInspection] = useState<Inspection | null>(null);
 
   useEffect(() => {
     async function loadInspections() {
@@ -34,6 +63,7 @@ export default function InspectionsHistoryPage() {
         const json = await res.json();
         if (json.success) {
           setInspections(json.data);
+          setConfidentialCount(json.meta?.confidentialCount ?? 0);
         }
       } catch (e) {
         console.error(e);
@@ -56,10 +86,36 @@ export default function InspectionsHistoryPage() {
     return matchSearch && matchResult;
   });
 
+  function handleSealSuccess(inspectionId: string, newState: boolean) {
+    setInspections((prev) =>
+      prev.map((ins) =>
+        ins.id === inspectionId ? { ...ins, isConfidential: newState } : ins
+      )
+    );
+    if (newState) {
+      setConfidentialCount((c) => c + 1);
+    } else {
+      setConfidentialCount((c) => Math.max(0, c - 1));
+    }
+    setModalInspection(null);
+  }
+
   if (!moduleAccess.inspections) return <DistrictModuleGate module="inspections"><></></DistrictModuleGate>;
 
   return (
     <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
+      {/* Confidential Modal */}
+      {modalInspection && (
+        <ConfidentialModal
+          inspectionId={modalInspection.id}
+          businessName={modalInspection.business?.name ?? ""}
+          inspectionDate={modalInspection.inspectionDate}
+          currentState={modalInspection.isConfidential}
+          onClose={() => setModalInspection(null)}
+          onSuccess={(newState) => handleSealSuccess(modalInspection.id, newState)}
+        />
+      )}
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <div>
@@ -68,7 +124,7 @@ export default function InspectionsHistoryPage() {
               ระบบบันทึกและคลังผลการตรวจประเมิน
             </h1>
             <span className="rounded-full bg-teal-100 px-2.5 py-0.5 text-xs font-bold text-teal-800 border border-teal-200">
-              Inspection Archive & Documents
+              Inspection Archive &amp; Documents
             </span>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
@@ -84,6 +140,21 @@ export default function InspectionsHistoryPage() {
           เลือกสถานประกอบการเพื่อตรวจใหม่
         </Link>
       </div>
+
+      {/* SUPER_ADMIN: confidential info bar */}
+      {isSuperAdmin && confidentialCount > 0 && (
+        <div className="flex items-center gap-3 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm">
+          <Lock className="h-5 w-5 text-red-600 flex-shrink-0" />
+          <div>
+            <span className="font-bold text-red-800">
+              มีบันทึกความลับ {confidentialCount} รายการ
+            </span>
+            <span className="text-red-600 ml-2">
+              (แสดงเฉพาะ Super Admin — ซ่อนจากผู้ใช้งานอื่น)
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Filter & Search Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
@@ -140,24 +211,34 @@ export default function InspectionsHistoryPage() {
           {filtered.map((ins) => (
             <div
               key={ins.id}
-              className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow-md transition-all space-y-3"
+              className={`rounded-2xl border bg-white p-5 shadow-sm hover:shadow-md transition-all space-y-3 ${
+                ins.isConfidential ? "border-red-300 bg-red-50/30" : "border-slate-200"
+              }`}
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
                 <div>
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <span className="rounded-md bg-teal-50 px-2 py-0.5 text-[10px] font-bold text-teal-700 border border-teal-200">
                       {ins.business?.businessType?.name || "สถานประกอบการ"}
                     </span>
                     <span className="text-[11px] text-slate-400">
                       ตรวจเมื่อ: {new Date(ins.inspectionDate).toLocaleDateString("th-TH")}
                     </span>
+
+                    {/* Confidential badge — visible to SUPER_ADMIN only (API already filters for others) */}
+                    {ins.isConfidential && (
+                      <span className="inline-flex items-center gap-1 rounded-md bg-red-600 px-2 py-0.5 text-[10px] font-bold text-white">
+                        <Lock className="h-3 w-3" />
+                        ความลับ
+                      </span>
+                    )}
                   </div>
                   <h3 className="text-base font-bold text-slate-900">
                     {ins.business?.name}
                   </h3>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-extrabold flex items-center gap-1.5 ${
                       ins.result === "PASSED"
@@ -187,6 +268,25 @@ export default function InspectionsHistoryPage() {
                   >
                     ความเสี่ยง: {ins.business?.riskLevel} ({ins.business?.riskScore})
                   </span>
+
+                  {/* SUPER_ADMIN: Seal/Unseal button */}
+                  {isSuperAdmin && (
+                    <button
+                      onClick={() => setModalInspection(ins)}
+                      title={ins.isConfidential ? "เปิดเผยบันทึกนี้" : "ปกปิดบันทึกนี้"}
+                      className={`flex items-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold border transition-all ${
+                        ins.isConfidential
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                          : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200"
+                      }`}
+                    >
+                      {ins.isConfidential ? (
+                        <><Unlock className="h-3.5 w-3.5" /> เปิดเผย</>
+                      ) : (
+                        <><Lock className="h-3.5 w-3.5" /> ปกปิด</>
+                      )}
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -220,7 +320,7 @@ export default function InspectionsHistoryPage() {
                     เอกสาร PDF และหลักฐานรูปภาพผลตรวจ ({ins.attachments.length} ไฟล์):
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    {ins.attachments.map((att: any) => (
+                    {ins.attachments.map((att) => (
                       <a
                         key={att.id}
                         href={att.fileUrl}
@@ -237,7 +337,7 @@ export default function InspectionsHistoryPage() {
                           <div className="flex items-center gap-1.5">
                             <img
                               src={att.fileUrl}
-                              alt={att.fileName}
+                              alt={att.fileName ?? ""}
                               className="h-7 w-7 rounded-md object-cover border border-slate-200"
                             />
                             <span className="text-teal-700 font-semibold">รูปภาพ</span>

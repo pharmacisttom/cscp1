@@ -185,9 +185,21 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const businessId = searchParams.get("businessId");
+    const role = request.headers.get("x-user-role");
+
+    // Server-side confidentiality enforcement:
+    // Only SUPER_ADMIN may see records marked isConfidential = true.
+    const { isSuperAdmin } = await import("@/lib/rbac");
+    const canSeeConfidential = isSuperAdmin(role);
+
+    const baseWhere: any = {
+      ...(businessId ? { businessId } : {}),
+      // Non-SUPER_ADMIN: exclude all confidential records
+      ...(!canSeeConfidential ? { isConfidential: false } : {}),
+    };
 
     const inspections = await prisma.inspection.findMany({
-      where: businessId ? { businessId } : {},
+      where: baseWhere,
       orderBy: { inspectionDate: "desc" },
       include: {
         business: {
@@ -204,9 +216,23 @@ export async function GET(request: NextRequest) {
       take: 50,
     });
 
+    // Provide a confidential count to SUPER_ADMIN so they know how many are hidden
+    const confidentialCount = canSeeConfidential
+      ? await prisma.inspection.count({
+          where: {
+            ...(businessId ? { businessId } : {}),
+            isConfidential: true,
+          },
+        })
+      : 0;
+
     return NextResponse.json({
       success: true,
       data: inspections,
+      meta: {
+        canSeeConfidential,
+        confidentialCount,
+      },
     });
   } catch (error: any) {
     console.error("Fetch inspections error:", error);
@@ -216,3 +242,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
