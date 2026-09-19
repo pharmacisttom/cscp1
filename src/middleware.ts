@@ -37,6 +37,7 @@ export async function middleware(request: NextRequest) {
   // Clone the request headers and set user context for downstream API routes
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-user-id", payload.userId);
+  requestHeaders.set("x-user-org-id", payload.organizationId);
   requestHeaders.set("x-user-role", payload.role);
   requestHeaders.set("x-user-district", encodeURIComponent(payload.district || ""));
 

@@ -10,7 +10,7 @@ export type AppRole =
  * Super Admins have full system access
  */
 export function isSuperAdmin(role?: string | null): boolean {
-  return role === "SUPER_ADMIN";
+  return role === "SUPER_ADMIN" || role === "PROVINCE_ADMIN";
 }
 
 /**
@@ -24,7 +24,7 @@ export function isAdmin(role?: string | null): boolean {
  * District Managers manage district operations (Admins inherit this)
  */
 export function isDistrictManager(role?: string | null): boolean {
-  return isAdmin(role) || role === "DISTRICT_MANAGER";
+  return isAdmin(role) || role === "DISTRICT_MANAGER" || role === "DISTRICT_ADMIN";
 }
 
 /**
@@ -32,7 +32,7 @@ export function isDistrictManager(role?: string | null): boolean {
  * Note: Inspectors DO NOT automatically inherit District Manager privileges.
  */
 export function isInspector(role?: string | null): boolean {
-  return role === "INSPECTOR";
+  return role === "INSPECTOR" || role === "INSPECTOR_FIELD";
 }
 
 /**

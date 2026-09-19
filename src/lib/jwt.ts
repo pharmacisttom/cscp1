@@ -9,6 +9,7 @@ function getSecretKey() {
 
 export interface UserSessionPayload extends JWTPayload {
   userId: string;
+  organizationId: string;
   email: string;
   role: string;
   district: string;

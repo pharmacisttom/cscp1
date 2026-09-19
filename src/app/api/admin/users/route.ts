@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: "อีเมล/บัญชีผู้ใช้งานนี้มีในระบบแล้ว" }, { status: 400 });
     }
 
-    let districtAdminRole = await prisma.role.findFirst({
+    const districtAdminRole = await prisma.role.findFirst({
       where: { name: "DISTRICT_MANAGER", organizationId: org.id },
     });
 

@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, ReactNode } from "react";
 import type { UserSessionPayload } from "@/lib/jwt";
+import { defaultModuleAccess, type DistrictModuleAccess } from "@/lib/district-modules";
 import { 
   isAdmin, 
   isDistrictManager, 
@@ -22,6 +23,7 @@ interface AuthContextType {
   isDistrictManager: boolean;
   isInspector: boolean;
   isAnalyst: boolean;
+  moduleAccess: DistrictModuleAccess;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -33,6 +35,7 @@ const AuthContext = createContext<AuthContextType>({
   isDistrictManager: false,
   isInspector: false,
   isAnalyst: false,
+  moduleAccess: defaultModuleAccess(),
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -40,9 +43,11 @@ export const useAuth = () => useContext(AuthContext);
 export function AuthProvider({
   children,
   user,
+  moduleAccess = defaultModuleAccess(),
 }: {
   children: ReactNode;
   user: UserSessionPayload | null;
+  moduleAccess?: DistrictModuleAccess;
 }) {
   const role = user?.role;
   
@@ -59,7 +64,8 @@ export function AuthProvider({
       isAdmin: isAdmin(role),
       isDistrictManager: isDistrictManager(role),
       isInspector: isInspector(role),
-      isAnalyst: isAnalyst(role)
+      isAnalyst: isAnalyst(role),
+      moduleAccess,
     }}>
       {children}
     </AuthContext.Provider>

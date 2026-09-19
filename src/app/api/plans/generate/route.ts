@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { canUseDistrictModuleFromHeaders } from "@/lib/district-access";
 import { prisma } from "@/lib/prisma";
 import {
   calculateCandidatePriority,
@@ -12,11 +13,14 @@ import {
 import { detectSpatialClusters } from "@/lib/epidemiology/clusters";
 
 export async function GET(request: NextRequest) {
+  if (!(await canUseDistrictModuleFromHeaders(request.headers, "smartPlans"))) {
+    return NextResponse.json({ success: false, error: "โมดูลแผนตรวจอัจฉริยะยังไม่เปิดใช้งานสำหรับอำเภอนี้" }, { status: 403 });
+  }
   try {
     const { searchParams } = new URL(request.url);
     const scenario = (searchParams.get("scenario") || "BALANCED") as RouteScenario;
     const maxStops = searchParams.get("maxStops") ? parseInt(searchParams.get("maxStops")!, 10) : 6;
-    let subdistrict = searchParams.get("subdistrict") || undefined;
+    const subdistrict = searchParams.get("subdistrict") || undefined;
 
     // RBAC Enforcement
     const userRole = request.headers.get("x-user-role");

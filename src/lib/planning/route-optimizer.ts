@@ -76,7 +76,7 @@ export function optimizeDailyInspectionRoute(
   }
 
   // 2. Candidate Selection based on Scenario
-  let pool = [...validCandidates];
+  const pool = [...validCandidates];
 
   switch (scenario) {
     case "RISK_FIRST":

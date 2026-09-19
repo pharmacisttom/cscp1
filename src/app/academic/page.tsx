@@ -42,7 +42,7 @@ export default function AcademicDashboardPage() {
       icon: <FileSearch className="h-8 w-8 text-amber-500" />,
       href: "/academic/duties#district",
       color: "bg-amber-50 border-amber-200 hover:border-amber-500",
-      description: "อำนาจหน้าที่ สสอ., รพช., รพ.สต., การตรวจสอบเบื้องต้น, รับเรื่องร้องเรียน"
+      description: "อำนาจหน้าที่ระดับอำเภอ, รพช., รพ.สต., การตรวจสอบเบื้องต้น, รับเรื่องร้องเรียน"
     },
     {
       id: "05",

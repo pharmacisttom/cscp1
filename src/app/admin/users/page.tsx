@@ -213,7 +213,7 @@ export default function AdminUsersPage() {
                             : "bg-teal-100 text-teal-700"
                         }`}>
                           <Building2 className="h-3.5 w-3.5" />
-                          {u.district === "ALL" ? "สสจ. ระยอง (ทุกอำเภอ)" : `สสอ. ${u.district}`}
+                          {u.district === "ALL" ? "สสจ. ระยอง (ทุกอำเภอ)" : `อำเภอ ${u.district}`}
                         </span>
                       </td>
                       <td className="px-6 py-4">
@@ -279,7 +279,7 @@ export default function AdminUsersPage() {
                   onChange={e => setForm({...form, district: e.target.value})}
                   required
                 >
-                  {districts.map(d => <option key={d} value={d}>สสอ. {d}</option>)}
+                  {districts.map(d => <option key={d} value={d}>อำเภอ {d}</option>)}
                 </select>
               </div>
 

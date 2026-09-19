@@ -21,7 +21,8 @@ import {
 
 export function BottomNav() {
   const pathname = usePathname();
-  const { isProvinceAdmin } = useAuth();
+  const { isProvinceAdmin, user } = useAuth();
+  const hasProvinceScope = isProvinceAdmin || user?.district === "ALL";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Main 4 items for the bottom bar
@@ -44,9 +45,9 @@ export function BottomNav() {
     { href: "/data-quality", label: "คุณภาพข้อมูล", icon: Database },
   ];
 
-  if (isProvinceAdmin) {
+  if (hasProvinceScope) {
     allItems.push({ href: "/admin/goals", label: "จัดการเป้าหมาย (KPIs)", icon: Target });
-    allItems.push({ href: "/admin/users", label: "จัดการระบบ", icon: Settings });
+    allItems.push({ href: "/admin/system", label: "จัดการระบบ", icon: Settings });
   } else {
     allItems.push({ href: "/district/officers", label: "จัดการทีม", icon: Users });
     allItems.push({ href: "/goals", label: "เป้าหมายและตัวชี้วัด", icon: Target });

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useAuth } from "@/components/auth/auth-provider";
+import { DistrictModuleGate } from "@/components/auth/district-module-gate";
 import {
   Smartphone,
   MapPin,
@@ -14,6 +16,7 @@ import {
 } from "lucide-react";
 
 export default function FieldModePage() {
+  const { moduleAccess } = useAuth();
   const [currentGps, setCurrentGps] = useState<{
     lat: number;
     lng: number;
@@ -105,6 +108,8 @@ export default function FieldModePage() {
       setVerifying(false);
     }
   };
+
+  if (!moduleAccess.inspections) return <DistrictModuleGate module="inspections"><></></DistrictModuleGate>;
 
   return (
     <div className="flex-1 max-w-lg mx-auto w-full p-4 space-y-4">

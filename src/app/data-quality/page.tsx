@@ -1,4 +1,7 @@
 import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
+import { verifyJwt } from "@/lib/jwt";
+import { canUseDistrictModule } from "@/lib/district-access";
 import Link from "next/link";
 import {
   Database,
@@ -12,6 +15,18 @@ import {
 import { IssuesTabs } from "@/components/data-quality/issues-tabs";
 
 export default async function DataQualityPage() {
+  const token = (await cookies()).get("cscp_session")?.value;
+  const session = token ? await verifyJwt(token) : null;
+  if (!(await canUseDistrictModule(session?.role ?? null, session?.district ?? null, "dataQuality"))) {
+    return (
+      <div className="flex flex-1 items-center justify-center p-8">
+        <div className="max-w-lg rounded-2xl border border-amber-200 bg-amber-50 p-8 text-center">
+          <h1 className="text-xl font-bold text-slate-900">โมดูลคุณภาพข้อมูลยังไม่เปิดใช้งาน</h1>
+          <p className="mt-2 text-sm text-slate-600">กรุณาติดต่อผู้ดูแลระบบระดับจังหวัดเพื่อเปิดใช้งานสำหรับอำเภอของท่าน</p>
+        </div>
+      </div>
+    );
+  }
   const total = await prisma.business.count();
   const withCoordinates = await prisma.businessLocation.count({
     where: { latitude: { not: null }, longitude: { not: null } },

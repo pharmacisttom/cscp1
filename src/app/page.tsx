@@ -80,7 +80,7 @@ export default function CommandCenterDashboard() {
             </h1>
             <span className="text-xs text-slate-400 hidden sm:inline">•</span>
             <span className="text-xs text-slate-500 hidden sm:inline">
-              {level === "province" ? "สสจ.ระยอง" : `สสอ.${districtName} จ.ระยอง`}
+              {level === "province" ? "สสจ.ระยอง" : `อำเภอ ${districtName} จ.ระยอง`}
             </span>
           </div>
 
@@ -93,7 +93,7 @@ export default function CommandCenterDashboard() {
                   className="text-xs border border-slate-300 rounded-md shadow-sm p-1"
                 >
                   <option value="province">สสจ.ระยอง (ภาพรวมจังหวัด)</option>
-                  <option value="district">สสอ. (ภาพรวมอำเภอ)</option>
+                  <option value="district">อำเภอ (ภาพรวมอำเภอ)</option>
                 </select>
                 {level === "district" && (
                   <select

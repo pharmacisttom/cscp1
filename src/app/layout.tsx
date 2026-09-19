@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer/Footer";
 import { BottomNav } from "@/components/navigation/bottom-nav";
 import { AuthProvider } from "@/components/auth/auth-provider";
 import { verifyJwt } from "@/lib/jwt";
+import { getModuleAccessForUser } from "@/lib/district-access";
 
 export const metadata: Metadata = {
   title: "CSCP GeoEpi | Consumer Safety & Geo-Epidemiological Intelligence",
@@ -25,6 +26,10 @@ export default async function RootLayout({
   if (token) {
     userSession = await verifyJwt(token);
   }
+  const moduleAccess = await getModuleAccessForUser(
+    userSession?.role,
+    userSession?.district,
+  );
 
   return (
     <html lang="th">
@@ -41,7 +46,7 @@ export default async function RootLayout({
         ></script>
       </head>
       <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased selection:bg-teal-500 selection:text-white">
-        <AuthProvider user={userSession}>
+        <AuthProvider user={userSession} moduleAccess={moduleAccess}>
           <Header />
           <main className="flex-1 flex flex-col pb-[68px] md:pb-0">{children}</main>
           <Footer />

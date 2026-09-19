@@ -43,7 +43,7 @@ function InspectionFormContent() {
   const [uploading, setUploading] = useState(false);
 
   // Form State
-  const [inspectorName, setInspectorName] = useState("พนักงานเจ้าหน้าที่ สสอ.ปลวกแดง");
+  const [inspectorName, setInspectorName] = useState("พนักงานเจ้าหน้าที่ อำเภอปลวกแดง");
   const [inspectionDate, setInspectionDate] = useState(
     new Date().toISOString().split("T")[0]
   );

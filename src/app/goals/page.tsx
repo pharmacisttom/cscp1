@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { Target, Calendar, CheckCircle2, Lock, Unlock, AlertCircle } from "lucide-react";
+import { useAuth } from "@/components/auth/auth-provider";
+import { DistrictModuleGate } from "@/components/auth/district-module-gate";
 
 export default function DistrictGoalsPage() {
+  const { moduleAccess } = useAuth();
   const [districtGoals, setDistrictGoals] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -85,6 +88,8 @@ export default function DistrictGoalsPage() {
       console.error(error);
     }
   };
+
+  if (!moduleAccess.kpis) return <DistrictModuleGate module="kpis"><></></DistrictModuleGate>;
 
   return (
     <div className="p-4 sm:p-6 max-w-4xl mx-auto space-y-6">

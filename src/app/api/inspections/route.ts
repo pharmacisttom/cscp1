@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { canUseDistrictModuleFromHeaders } from "@/lib/district-access";
 import { prisma } from "@/lib/prisma";
 import { calculateGeoEpiRisk } from "@/lib/risk/engine";
 
 export async function POST(request: NextRequest) {
+  if (!(await canUseDistrictModuleFromHeaders(request.headers, "inspections"))) {
+    return NextResponse.json({ success: false, error: "โมดูลผลการตรวจยังไม่เปิดใช้งานสำหรับอำเภอนี้" }, { status: 403 });
+  }
   try {
     const body = await request.json();
     const {
@@ -175,6 +179,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+  if (!(await canUseDistrictModuleFromHeaders(request.headers, "inspections"))) {
+    return NextResponse.json({ success: false, error: "โมดูลผลการตรวจยังไม่เปิดใช้งานสำหรับอำเภอนี้" }, { status: 403 });
+  }
   try {
     const { searchParams } = new URL(request.url);
     const businessId = searchParams.get("businessId");

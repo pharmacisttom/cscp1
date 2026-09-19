@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { useAuth } from "@/components/auth/auth-provider";
+import { DistrictModuleGate } from "@/components/auth/district-module-gate";
 import {
   Navigation,
   Clock,
@@ -26,6 +28,7 @@ const SmartMapView = dynamic(() => import("@/components/map/smart-map-view"), {
 });
 
 export default function SmartInspectionPlannerPage() {
+  const { moduleAccess } = useAuth();
   const [scenario, setScenario] = useState("BALANCED");
   const [maxStops, setMaxStops] = useState(6);
   const [subdistrict, setSubdistrict] = useState("ALL");
@@ -105,6 +108,8 @@ export default function SmartInspectionPlannerPage() {
         nextInspection: null,
       }))
     : [];
+
+  if (!moduleAccess.smartPlans) return <DistrictModuleGate module="smartPlans"><></></DistrictModuleGate>;
 
   return (
     <div className="flex-1 flex flex-col h-[calc(100vh-4rem)] overflow-hidden">

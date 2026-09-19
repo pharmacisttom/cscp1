@@ -15,7 +15,7 @@ export default function DutiesPage() {
             ขอบเขตหน้าที่และความรับผิดชอบ
           </h1>
           <p className="text-slate-500 mt-2">
-            เปรียบเทียบอำนาจหน้าที่การทำงานระหว่าง สสจ. (Level 1), สสอ./รพช. (Level 2) และ รพ.สต. (Level 3)
+            เปรียบเทียบอำนาจหน้าที่การทำงานระหว่าง สสจ. (Level 1), อำเภอ/รพช. (Level 2) และ รพ.สต. (Level 3)
           </p>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function DutiesPage() {
               </div>
               <div>
                 <h2 className="text-xl font-black text-slate-900">ระดับอำเภอ (Level 2)</h2>
-                <p className="text-sm font-semibold text-amber-600">สสอ. / รพช.</p>
+                <p className="text-sm font-semibold text-amber-600">อำเภอ / รพช.</p>
               </div>
             </div>
 
@@ -150,7 +150,7 @@ export default function DutiesPage() {
               <DutyItem 
                 icon={<AlertTriangle className="w-5 h-5 text-slate-400" />}
                 title="รับแจ้งปัญหา"
-                desc="เป็นด่านหน้ารับเรื่องร้องเรียน เก็บข้อมูลเบื้องต้น ประสานและส่งต่อข้อมูลให้สสอ."
+                desc="เป็นด่านหน้ารับเรื่องร้องเรียน เก็บข้อมูลเบื้องต้น ประสานและส่งต่อข้อมูลให้หน่วยงานระดับอำเภอ"
               />
               <DutyItem 
                 icon={<ShieldCheck className="w-5 h-5 text-slate-400" />}
@@ -172,7 +172,7 @@ export default function DutiesPage() {
               <tr className="bg-slate-50 border-y border-slate-200">
                 <th className="py-4 px-4 font-bold text-slate-700 text-sm">กิจกรรม / กระบวนงาน</th>
                 <th className="py-4 px-4 font-bold text-center text-indigo-700 text-sm w-32 border-l border-slate-200">จังหวัด (สสจ.)</th>
-                <th className="py-4 px-4 font-bold text-center text-amber-700 text-sm w-32 border-l border-slate-200">อำเภอ (สสอ./รพช.)</th>
+                <th className="py-4 px-4 font-bold text-center text-amber-700 text-sm w-32 border-l border-slate-200">อำเภอ (หน่วยงานอำเภอ/รพช.)</th>
                 <th className="py-4 px-4 font-bold text-center text-emerald-700 text-sm w-32 border-l border-slate-200">ปฐมภูมิ (รพ.สต.)</th>
               </tr>
             </thead>

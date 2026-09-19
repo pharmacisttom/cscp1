@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { canUseDistrictModuleFromHeaders } from "@/lib/district-access";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
+  if (!(await canUseDistrictModuleFromHeaders(request.headers, "inspections"))) {
+    return NextResponse.json({ success: false, error: "โมดูล Field GPS ยังไม่เปิดใช้งานสำหรับอำเภอนี้" }, { status: 403 });
+  }
   try {
     const body = await request.json();
     const userId = request.headers.get("x-user-id") || "SYSTEM";

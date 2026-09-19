@@ -44,11 +44,11 @@ export async function POST(req: Request) {
     }
 
     // Determine role (simplified, assume user has one role)
-    let dbRoleName = user.roles[0]?.role?.name || "VIEWER";
+    const dbRoleName = user.roles[0]?.role?.name || "VIEWER";
     
     // Canonical mapping for legacy DB roles
     let roleName = dbRoleName;
-    if (dbRoleName === "PROVINCE_ADMIN") roleName = "ADMIN";
+    if (dbRoleName === "PROVINCE_ADMIN") roleName = "SUPER_ADMIN";
     if (dbRoleName === "DISTRICT_ADMIN") roleName = "DISTRICT_MANAGER";
     if (dbRoleName === "INSPECTOR_FIELD") roleName = "INSPECTOR";
 
@@ -61,6 +61,7 @@ export async function POST(req: Request) {
     // Create JWT
     const token = await signJwt({
       userId: user.id,
+      organizationId: user.organizationId,
       email: user.email,
       role: roleName,
       district,
@@ -79,9 +80,17 @@ export async function POST(req: Request) {
     });
 
     // Set cookie
+    // LAN/XAMPP is commonly served over plain HTTP. Marking the cookie Secure in
+    // that environment makes browsers silently discard it and sends users back
+    // to /login after a successful authentication.
+    const forwardedProtocol = req.headers.get("x-forwarded-proto")?.split(",")[0]?.trim();
+    const requestIsHttps = forwardedProtocol
+      ? forwardedProtocol === "https"
+      : new URL(req.url).protocol === "https:";
+
     response.cookies.set("cscp_session", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: requestIsHttps,
       sameSite: "lax",
       path: "/",
       maxAge: 60 * 60 * 24, // 24 hours

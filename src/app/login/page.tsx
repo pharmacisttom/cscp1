@@ -26,7 +26,8 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        window.location.href = "/"; // Force full reload to update Context
+        router.replace("/");
+        router.refresh();
       } else {
         setError(data.error || "เข้าสู่ระบบไม่สำเร็จ");
       }

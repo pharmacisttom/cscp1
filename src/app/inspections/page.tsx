@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useAuth } from "@/components/auth/auth-provider";
+import { DistrictModuleGate } from "@/components/auth/district-module-gate";
 import {
   ClipboardCheck,
   FileText,
@@ -19,6 +21,7 @@ import {
 } from "lucide-react";
 
 export default function InspectionsHistoryPage() {
+  const { moduleAccess } = useAuth();
   const [inspections, setInspections] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -52,6 +55,8 @@ export default function InspectionsHistoryPage() {
 
     return matchSearch && matchResult;
   });
+
+  if (!moduleAccess.inspections) return <DistrictModuleGate module="inspections"><></></DistrictModuleGate>;
 
   return (
     <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-6">

@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import { canUseDistrictModuleFromHeaders } from "@/lib/district-access";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> } // districtGoalId
 ) {
+  if (!(await canUseDistrictModuleFromHeaders(request.headers, "kpis"))) {
+    return NextResponse.json({ success: false, error: "โมดูล KPI ยังไม่เปิดใช้งานสำหรับอำเภอนี้" }, { status: 403 });
+  }
   try {
     const orgId = request.headers.get("x-user-org-id");
     let district = request.headers.get("x-user-district");

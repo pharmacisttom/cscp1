@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { canUseDistrictModuleFromHeaders } from "@/lib/district-access";
 import { prisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/rbac";
 
 export async function POST(request: NextRequest) {
+  if (!(await canUseDistrictModuleFromHeaders(request.headers, "dataQuality"))) {
+    return NextResponse.json({ success: false, error: "โมดูลคุณภาพข้อมูลยังไม่เปิดใช้งานสำหรับอำเภอนี้" }, { status: 403 });
+  }
   try {
     const userRole = request.headers.get("x-user-role");
     const rawDistrict = request.headers.get("x-user-district");

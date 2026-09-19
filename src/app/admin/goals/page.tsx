@@ -103,7 +103,7 @@ export default function AdminGoalsPage() {
 
   const calculateTotalProgress = (districtGoals: any[]) => {
     let totalTarget = 0;
-    let totalInspected = 0; // Requires actual inspection counts (for now we might not have it unless we join GoalBusiness)
+    const totalInspected = 0; // Requires actual inspection counts (for now we might not have it unless we join GoalBusiness)
     
     // We didn't include goalBusinesses in the API, we can just sum targetCount for now
     districtGoals.forEach(dg => {
